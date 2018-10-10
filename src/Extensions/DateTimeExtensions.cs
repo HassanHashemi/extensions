@@ -37,28 +37,25 @@ namespace Project.Base
 
         public static string GetDayName(this DayOfWeek day)
         {
-            if (day == DayOfWeek.Friday) return "جمعه";
+            if (day == DayOfWeek.Friday)
+            {
+                return "جمعه";
+            }
+            
             if (day == DayOfWeek.Monday) return "دوشنبه";
             if (day == DayOfWeek.Saturday) return "شنبه";
             if (day == DayOfWeek.Sunday) return "يکشنبه";
             if (day == DayOfWeek.Thursday) return "پنج شنبه";
             if (day == DayOfWeek.Tuesday) return "سه شنبه";
             if (day == DayOfWeek.Wednesday) return "چهارشنبه";
-            return "";
+            return string.Empty;
 
         }
 
         public static int GetPersianYear(this DateTime date)
-        {
-            PersianCalendar pc = new PersianCalendar();
-            return pc.GetYear(date);
-        }
+            => new PersianCalendar().GetYear(date);
 
         public static int GetPersianMonth(this DateTime date)
-        {
-            PersianCalendar pc = new PersianCalendar();
-            return pc.GetMonth(date);
-        }
-
+            => new PersianCalendar().GetMonth(date);
     }
 }

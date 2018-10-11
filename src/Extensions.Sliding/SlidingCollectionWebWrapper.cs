@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Portal.Business.Extensions
+namespace Tebyan.Business.Extensions
 {
     public class SlidingCollectionWrapper<T> where T : class
     {

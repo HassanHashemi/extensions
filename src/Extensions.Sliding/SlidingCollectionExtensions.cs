@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portal.Business.Extensions
+namespace Tebyan.Business.Extensions
 {
     public static class SlidingCollectionExtensions
     {

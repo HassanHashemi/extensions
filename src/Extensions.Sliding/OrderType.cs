@@ -1,4 +1,4 @@
-﻿namespace Portal.Business.Extensions
+﻿namespace Tebyan.Business.Extensions
 {
     public enum OrderType
     {

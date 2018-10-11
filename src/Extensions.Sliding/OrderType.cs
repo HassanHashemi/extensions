@@ -1,4 +1,4 @@
-﻿namespace Project.Business.Extensions
+﻿namespace Portal.Business.Extensions
 {
     public enum OrderType
     {

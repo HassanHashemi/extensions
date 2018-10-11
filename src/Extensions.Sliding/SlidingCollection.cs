@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 
-namespace Project.Business.Extensions
+namespace Portal.Business.Extensions
 {
     public class SlidingCollection<T> : IEnumerable<T> where T : class
     {

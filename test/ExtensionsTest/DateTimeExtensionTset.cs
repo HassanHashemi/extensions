@@ -72,6 +72,7 @@ namespace ExtensionsTest
         public void ShouldPass_ValidInput_GetDateTimeAsDirectoryPath_Test()
         {
             var date = new DateTime(2018,10,13);
+            var x = date.GetDateTimeAsDirectoryPath();
             Assert.True(date.GetDateTimeAsDirectoryPath() == "2018/10/13");
         }
     }

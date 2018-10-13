@@ -59,6 +59,6 @@ namespace Project.Base
             => new PersianCalendar().GetMonth(date);
 
         public static string GetDateTimeAsDirectoryPath(this DateTime date)
-            => GlobalsCommon.AS(date.Year, @"/", date.Month, @"/", date.Day);
+            => $"{date.Year}/{date.Month}/{ date.Day}";
     }
 }

@@ -9,7 +9,6 @@ namespace Project.Base
         public static string ToPersianDate(this DateTime date)
         {
             var calendar = new PersianCalendar();
-
             return string.Format("{0}/{1}/{2}",
                 calendar.GetYear(date),
                 calendar.GetMonth(date).ToString().PadLeft(2, '0'),
@@ -28,12 +27,10 @@ namespace Project.Base
         }
 
         public static string ToFullStringPersianDateTime(this DateTime date)
-        {
-            return GlobalsCommon.AS(new PersianCalendar().GetDayOfWeek(date).GetDayName(),
+            => GlobalsCommon.AS(new PersianCalendar().GetDayOfWeek(date).GetDayName(),
                 " ",
                 date.ToPersianDate(),
                 (date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : ""));
-        }
 
         public static string GetDayName(this DayOfWeek day)
         {
@@ -41,13 +38,30 @@ namespace Project.Base
             {
                 return "جمعه";
             }
-            
-            if (day == DayOfWeek.Monday) return "دوشنبه";
-            if (day == DayOfWeek.Saturday) return "شنبه";
-            if (day == DayOfWeek.Sunday) return "يکشنبه";
-            if (day == DayOfWeek.Thursday) return "پنج شنبه";
-            if (day == DayOfWeek.Tuesday) return "سه شنبه";
-            if (day == DayOfWeek.Wednesday) return "چهارشنبه";
+            if (day == DayOfWeek.Monday)
+            {
+                return "دوشنبه";
+            }
+            if (day == DayOfWeek.Saturday)
+            {
+                return "شنبه";
+            }
+            if (day == DayOfWeek.Sunday)
+            {
+                return "يکشنبه";
+            }
+            if (day == DayOfWeek.Thursday)
+            {
+                return "پنج شنبه";
+            }
+            if (day == DayOfWeek.Tuesday)
+            {
+                return "سه شنبه";
+            }
+            if (day == DayOfWeek.Wednesday)
+            {
+                return "چهارشنبه";
+            }
             return string.Empty;
 
         }

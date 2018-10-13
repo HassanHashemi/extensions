@@ -28,12 +28,7 @@ namespace Project.Base
         }
 
         public static string ToFullStringPersianDateTime(this DateTime date)
-        {
-            return GlobalsCommon.AS(new PersianCalendar().GetDayOfWeek(date).GetDayName(),
-                " ",
-                date.ToPersianDate(),
-                (date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : ""));
-        }
+            => $"{new PersianCalendar().GetDayOfWeek(date).GetDayName()} {date.ToPersianDate()} {(date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "")}";
 
         public static string GetDayName(this DayOfWeek day)
         {

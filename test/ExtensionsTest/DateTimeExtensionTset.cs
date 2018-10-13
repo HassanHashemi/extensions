@@ -67,5 +67,12 @@ namespace ExtensionsTest
             Assert.True(persianYear == 1398);
             Assert.True(persianMonth == 01);
         }
+
+        [Fact]
+        public void ShouldPass_ValidInput_GetDateTimeAsDirectoryPath_Test()
+        {
+            var date = new DateTime(2018,10,13);
+            Assert.True(date.GetDateTimeAsDirectoryPath() == "2018/10/13");
+        }
     }
 }

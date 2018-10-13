@@ -26,5 +26,14 @@ namespace ExtensionsTest
             Assert.True(selected.Description == "Hashemi's name");
             Assert.True(selected.Value == 1);
         }
+
+        [Fact]
+        public void Shouid_Pass_GetEnumAttribute_ValidInput_Test()
+        {
+            var value = typeof(testEnum).GetEnumAttribute<DescriptionAttribute>("Mahdi");
+            Assert.True(value.Description == "my name");
+
+        }
+
     }
 }

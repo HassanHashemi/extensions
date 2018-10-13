@@ -20,6 +20,13 @@ namespace Extensions
             });
         }
 
+        public static TAttributeType GetEnumAttribute<TAttributeType>(this Type enumType, string memberName)
+        {
+            var memInfo = enumType.GetMember(memberName);
+            var attributes = memInfo[0].GetCustomAttributes(typeof(TAttributeType), false);
+
+            return (TAttributeType)attributes[0];
+        }
         public static string GetEnumDescription(this Enum enumValue)
         {
             var fi = enumValue.GetType().GetField(enumValue.ToString());

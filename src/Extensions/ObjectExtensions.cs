@@ -5,21 +5,12 @@ namespace System
 {
     public static class ObjectExtensions
     {
-        public static TAttributeType GetEnumAttribute<TAttributeType>(this Type enumType, string memberName)
-        {
-            var memInfo = enumType.GetMember(memberName);
-            var attributes = memInfo[0].GetCustomAttributes(typeof(TAttributeType), false);
-
-            return (TAttributeType)attributes[0];
-        }
-
         public static bool HasProperty(this object source, string propertyName)
         {
             if (source == null)
             {
                 return false;
             }
-
             return source.GetType()
                     .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                         .Any(p => p.Name == propertyName);
@@ -31,7 +22,6 @@ namespace System
             {
                 throw new ArgumentNullException(nameof(source));
             }
-
             var type = source.GetType();
             var property = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .FirstOrDefault(p => p.Name == name);
@@ -43,7 +33,6 @@ namespace System
         {
             var type = source.GetType();
             var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-
             if (property == null)
             {
                 throw new InvalidOperationException($"property {propertyName} not found.");

@@ -27,6 +27,7 @@ namespace Extensions
 
             return (TAttributeType)attributes[0];
         }
+
         public static string GetEnumDescription(this Enum enumValue)
         {
             var fi = enumValue.GetType().GetField(enumValue.ToString());

@@ -13,14 +13,23 @@ namespace Project.Base
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// set valid title for use in url that use '-' instead od spaceing  
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string ToUrlTitle(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return string.Empty;
             }
-
-            return Regex.Replace(Regex.Replace(Regex.Replace(str.Trim(), "<[^>]{1,}>", ""), @"[^\w]{1,}", " ").Replace('"', '_').Trim('،'), @"[\s\t\r\n]{1,}", "-");
+            return Regex.Replace(
+                    Regex.Replace(
+                        str.Trim(),
+                        @"[^\w]{1,}", " ")
+                        .Replace('"', '_').Trim('،'),
+                    @"[\s\t\r\n]{1,}", "-");
         }
 
         public static int ToInt(this string integer, int defaultInt)
@@ -125,45 +134,6 @@ namespace Project.Base
             }
             return (sb.ToString());
         }
-        public static DateTime ToDateFromPersian(this string value, string defaultValue = "1300/01/01")
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                value = defaultValue;
-            }
-
-            value = Regex.Replace(value, ".*?([0-9]{4}/[0-9]{2}/[0-9]{2}).*", "$1");
-            var dateParts = value.Split(new[] { '/' }).Select(d => int.Parse(d)).ToArray();
-            var hour = 0;
-            var min = 0;
-            var seconds = 0;
-            DateTime date = new DateTime(dateParts[0], dateParts[1], dateParts[2], hour, min, seconds, new PersianCalendar());
-            return date;
-        }
-
-        public static DateTime ToDate(this string date, DateTime defaultDateTime)
-        {
-            try
-            {
-                return DateTime.Parse(date.ToSqlDate());
-            }
-            catch
-            {
-                return defaultDateTime;
-            }
-        }
-
-        public static DateTime SqlDateToDate(this string sqlDate, DateTime defaultDateTime)
-        {
-            try
-            {
-                return DateTime.Parse(sqlDate);
-            }
-            catch
-            {
-                return defaultDateTime;
-            }
-        }
 
         public static string Translate(this string key, Type resourceType)
         {
@@ -231,26 +201,6 @@ namespace Project.Base
             {
                 throw;
             }
-        }
-
-        public static string ToSqlDate(this string date)
-        {
-            string result = "NULL";
-            var dd = "";
-            var mm = "";
-            var yyyy = "";
-            if (date.Length > 0)
-            {
-                var buf = date;
-                dd = buf.Substring(0, buf.IndexOf("-", 1, System.StringComparison.Ordinal));
-                buf = buf.Substring(buf.IndexOf("-", 1, System.StringComparison.Ordinal) + 1, buf.Length - (buf.IndexOf("-", 1, System.StringComparison.Ordinal) + 1));
-                mm = buf.Substring(0, buf.IndexOf("-", 1, System.StringComparison.Ordinal));
-                buf = buf.Substring(buf.IndexOf("-", 1, System.StringComparison.Ordinal) + 1, buf.Length - (buf.IndexOf("-", 1, System.StringComparison.Ordinal) + 1));
-                yyyy = buf;
-                result = yyyy + "/" + mm + "/" + dd;
-            }
-
-            return result;
         }
 
         public static string UrlEncode(string content)

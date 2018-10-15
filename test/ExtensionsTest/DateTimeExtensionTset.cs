@@ -1,5 +1,6 @@
 using Project.Base;
 using System;
+using System.Globalization;
 using Xunit;
 
 namespace ExtensionsTest
@@ -75,5 +76,21 @@ namespace ExtensionsTest
             var x = date.GetDateTimeAsDirectoryPath();
             Assert.True(date.GetDateTimeAsDirectoryPath() == "2018/10/13");
         }
+
+        [Fact]
+        public void ShouldPass_ValidInput_ToDateFromPersian_Test()
+        {
+            var x = "1397/7/23".ToDateFromPersian();
+            Assert.True("1397/7/23".ToDateFromPersian() == new DateTime(2018, 10, 15));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ShouldException_NullInput_ToDateFromPersian_Test(string persianStringDate)
+        {
+            Assert.Throws<ArgumentNullException>(() =>persianStringDate.ToDateFromPersian());
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Project.Base
 {
@@ -9,7 +11,6 @@ namespace Project.Base
         public static string ToPersianDate(this DateTime date)
         {
             var calendar = new PersianCalendar();
-
             return string.Format("{0}/{1}/{2}",
                 calendar.GetYear(date),
                 calendar.GetMonth(date).ToString().PadLeft(2, '0'),
@@ -36,13 +37,30 @@ namespace Project.Base
             {
                 return "جمعه";
             }
-            
-            if (day == DayOfWeek.Monday) return "دوشنبه";
-            if (day == DayOfWeek.Saturday) return "شنبه";
-            if (day == DayOfWeek.Sunday) return "يکشنبه";
-            if (day == DayOfWeek.Thursday) return "پنج شنبه";
-            if (day == DayOfWeek.Tuesday) return "سه شنبه";
-            if (day == DayOfWeek.Wednesday) return "چهارشنبه";
+            if (day == DayOfWeek.Monday)
+            {
+                return "دوشنبه";
+            }
+            if (day == DayOfWeek.Saturday)
+            {
+                return "شنبه";
+            }
+            if (day == DayOfWeek.Sunday)
+            {
+                return "يکشنبه";
+            }
+            if (day == DayOfWeek.Thursday)
+            {
+                return "پنج شنبه";
+            }
+            if (day == DayOfWeek.Tuesday)
+            {
+                return "سه شنبه";
+            }
+            if (day == DayOfWeek.Wednesday)
+            {
+                return "چهارشنبه";
+            }
             return string.Empty;
 
         }
@@ -55,5 +73,86 @@ namespace Project.Base
 
         public static string GetDateTimeAsDirectoryPath(this DateTime date)
             => $"{date.Year}/{date.Month}/{ date.Day}";
+
+        public static string ToSqlDate(this string date)
+        {
+            throw new NotImplementedException();
+            //string result = string.Empty;
+            //if (date.Length > 0)
+            //{
+            //    var dd = "";
+            //    var mm = "";
+            //    var yyyy = "";
+            //    var buf = date;
+            //    yyyy = buf.Substring(0, buf.IndexOf("-", 1, StringComparison.Ordinal));
+            //    if (yyyy.Length != 4)
+            //    {
+            //        return string.Empty;
+            //    }
+            //    buf = buf.Substring(buf.IndexOf("-", 1, StringComparison.Ordinal) + 1, buf.Length - (buf.IndexOf("-", 1, StringComparison.Ordinal) + 1));
+            //    mm = buf.Substring(0, buf.IndexOf("-", 1, StringComparison.Ordinal));
+            //    if (mm.Length > 2 || mm.Length == 0)
+            //    {
+            //        return string.Empty;
+            //    }
+            //    else if (mm.ToInt(0) > 12 && mm.ToInt(0) < 0)
+            //    {
+            //        throw new ArgumentOutOfRangeException();
+            //    }
+            //    buf = buf.Substring(buf.IndexOf("-", 1, StringComparison.Ordinal) + 1, buf.Length - (buf.IndexOf("-", 1, StringComparison.Ordinal) + 1));
+            //    dd = buf;
+            //    if (mm.Length > 2 || mm.Length == 0)
+            //    {
+            //        return string.Empty;
+            //    }
+            //    else if (dd.ToInt(0) > 31 && dd.ToInt(0) < 0)
+            //    {
+            //        throw new ArgumentOutOfRangeException();
+            //    }
+            //    result = yyyy + "/" + mm + "/" + dd;
+            //}
+            //return result;
+        }
+
+        public static DateTime SqlDateToDate(this string sqlDate, DateTime defaultDateTime)
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    return DateTime.Parse(sqlDate);
+            //}
+            //catch
+            //{
+            //    return defaultDateTime;
+            //}
+        }
+
+        public static DateTime ToDate(this string date, DateTime defaultDateTime)
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    return DateTime.Parse(date.ToSqlDate());
+            //}
+            //catch
+            //{
+            //    return defaultDateTime;
+            //}
+        }
+        public static DateTime ToDateFromPersian(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException();
+            }
+
+            value = Regex.Replace(value, ".*?([0-9]{4}/[0-9]{2}/[0-9]{2}).*", "$1");
+            var dateParts = value.Split('/').Select(d => int.Parse(d)).ToArray();
+            DateTime date = new DateTime(dateParts[0], dateParts[1], dateParts[2], new PersianCalendar());
+            return date;
+        }
+
+       
+
     }
 }

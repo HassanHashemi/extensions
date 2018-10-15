@@ -13,14 +13,23 @@ namespace Project.Base
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// set valid title for use in url that use '-' instead od spaceing  
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string ToUrlTitle(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
                 return string.Empty;
             }
-
-            return Regex.Replace(Regex.Replace(Regex.Replace(str.Trim(), "<[^>]{1,}>", ""), @"[^\w]{1,}", " ").Replace('"', '_').Trim('،'), @"[\s\t\r\n]{1,}", "-");
+            return Regex.Replace(
+                    Regex.Replace(
+                        str.Trim(),
+                        @"[^\w]{1,}", " ")
+                        .Replace('"', '_').Trim('،'),
+                    @"[\s\t\r\n]{1,}", "-");
         }
 
         public static int ToInt(this string integer, int defaultInt)
@@ -50,7 +59,6 @@ namespace Project.Base
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
                 throw e;
             }
         }

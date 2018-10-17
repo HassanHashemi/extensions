@@ -22,7 +22,7 @@ namespace Project.Base
         {
             if (string.IsNullOrEmpty(str))
             {
-                return string.Empty;
+                throw new ArgumentNullException();
             }
             return Regex.Replace(
                     Regex.Replace(
@@ -32,46 +32,33 @@ namespace Project.Base
                     @"[\s\t\r\n]{1,}", "-");
         }
 
-        public static int ToInt(this string integer, int defaultInt)
+        public static string RSAEncryption(string data, RSAParameters key, bool addPadding)
         {
             try
             {
-                return int.Parse(integer);
-            }
-            catch
-            {
-                return defaultInt;
-            }
-        }
-
-        public static string RSAEncryption(string DataStr, RSAParameters RSAKey, bool DoOAEPPadding)
-        {
-            try
-            {
-                byte[] Data = Encoding.ASCII.GetBytes(DataStr);
+                byte[] Data = Encoding.ASCII.GetBytes(data);
                 byte[] encryptedData;
                 using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
                 {
-                    RSA.ImportParameters(RSAKey);
-                    encryptedData = RSA.Encrypt(Data, DoOAEPPadding);
+                    RSA.ImportParameters(key);
+                    encryptedData = RSA.Encrypt(Data, addPadding);
                 }
                 return Encoding.ASCII.GetString(encryptedData);
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
                 throw e;
             }
         }
 
-        public static RSAParameters ToRSAParameter(this string Key)
+        public static RSAParameters ToRSAParameter(this string key)
         {
-            var st = new StringReader(Key);
+            var st = new StringReader(key);
             var xs = new XmlSerializer(typeof(RSAParameters));
             return (RSAParameters)xs.Deserialize(st);
         }
 
-        public static string RSADecryption(string DataStr, RSAParameters RSAKey, bool DoOAEPPadding)
+        public static string RSADecryption(string DataStr, RSAParameters rsaKey, bool addPadding)
         {
             try
             {
@@ -79,15 +66,14 @@ namespace Project.Base
                 byte[] decryptedData;
                 using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
                 {
-                    RSA.ImportParameters(RSAKey);
-                    decryptedData = RSA.Decrypt(Data, DoOAEPPadding);
+                    RSA.ImportParameters(rsaKey);
+                    decryptedData = RSA.Decrypt(Data, addPadding);
                 }
                 return Encoding.ASCII.GetString(decryptedData);
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.ToString());
-                return null;
+                throw e;
             }
         }
 
@@ -117,11 +103,10 @@ namespace Project.Base
 
         public static string GetHashString_MD5(this string str)
         {
-            if (String.IsNullOrEmpty(str))
+            if (string.IsNullOrEmpty(str))
             {
                 str = "";
             }
-
             byte[] hash;
             MD5 md = MD5CryptoServiceProvider.Create();
             ASCIIEncoding enc = new ASCIIEncoding();
@@ -168,7 +153,7 @@ namespace Project.Base
                 cs.FlushFinalBlock();
                 return System.Convert.ToBase64String(ms.ToArray());
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return e.Message;
             }
@@ -197,9 +182,15 @@ namespace Project.Base
 
                 return "-1";
             }
+<<<<<<< HEAD
             catch (Exception)
             {
                 throw;
+=======
+            catch (Exception e)
+            {
+                throw e;
+>>>>>>> a812cc49ae0bcd20803d95e1c8aec53511efe172
             }
         }
 
@@ -228,7 +219,7 @@ namespace Project.Base
 
         public static string ReverseString(this string value)
         {
-            char[] charArray = value.ToCharArray();
+            var charArray = value.ToCharArray();
             Array.Reverse(charArray);
             return new string(charArray);
         }
@@ -248,25 +239,19 @@ namespace Project.Base
             return Encoding.UTF8.GetBytes(value);
         }
 
-        [Obsolete]
-        public static string Left(this string value, int length)
-        {
-            return value.Left(length, false);
-        }
-
         public static string Left(this string value, int length, bool completeWords)
         {
             if (value.Length > length)
             {
                 value = value.Substring(0, length);
-                if (completeWords)
+                var lastindex = value.LastIndexOf(" ");
+                if (completeWords && lastindex != -1)
                 {
-                    return value.Substring(0, value.LastIndexOf(" "));
+                    return value.Substring(0, lastindex);
                 }
                 return value;
             }
-
-            return value;
+            throw new ArgumentOutOfRangeException();
         }
 
         public static string Right(this string value, int length)
@@ -276,87 +261,53 @@ namespace Project.Base
 
         public static int[] ToIntArray(this string content)
         {
-            List<int> arr = new List<int>();
-
-            if (!String.IsNullOrEmpty(content))
+            var array = new List<int>();
+            if (!string.IsNullOrEmpty(content))
             {
                 string[] ints = content.Split(new char[] { ',' });
-
                 foreach (string i in ints)
                 {
-                    arr.Add(System.Convert.ToInt32(i));
+                    try
+                    {
+                        array.Add(System.Convert.ToInt32(i));
+                    }
+                    catch
+                    {
+                        throw new FormatException();
+                    }
                 }
+                return array.ToArray();
             }
-
-            return arr.ToArray();
+            throw new ArgumentNullException();
         }
 
         public static string[] ToStringArray(this string content)
         {
-            string[] arr = new string[] { };
-
-            if (!String.IsNullOrEmpty(content))
-            {
-                arr = content.Split(new char[] { ',' }).ToArray();
-
-            }
-
-            return arr;
+            throw new NotImplementedException();
+            //var arr = new string[] { };
+            //if (!string.IsNullOrEmpty(content))
+            //{
+            //    arr = content.Split(new char[] { ',' }).ToArray();
+            //    return arr;
+            //}
+            //throw new ArgumentNullException();
         }
 
-        public static String StripHtmlTags(this String html)
+        public static string StripHtmlTags(this string html)
         {
-            if (String.IsNullOrEmpty(html))
-            {
-                return html;
-            }
-            else
-            {
-                return Regex.Replace(html, "<(.|\n)*?>", String.Empty).Replace("<", string.Empty);
-            }
+            throw new NotImplementedException();
+            //if (string.IsNullOrEmpty(html))
+            //{
+            //    return html;
+            //}
+            //else
+            //{
+            //    return Regex.Replace(html, "<(.|\n)*?>", string.Empty).Replace("<", string.Empty);
+            //}
         }
 
-        [Obsolete]
-        public static String Shorten(this String html, int count)
-        {
-            return html.Shorten(count, false);
-        }
 
-        public static String Shorten(this String html, int count, bool completeWords)
-        {
-            if (String.IsNullOrEmpty(html) || count <= 0)
-            {
-                return html;
-            }
-            else
-            {
-                string noHtml = html.StripHtmlTags();
-                if (noHtml.Count() > count)
-                {
-                    return String.Format("{0}...", noHtml.Left(count - 3, completeWords));
-
-                }
-                return noHtml;
-            }
-        }
-
-        public static String UrlGuidEncode(this String content, string replaceBy)
-        {
-            string guid = content.RemoveSpecialCharacters(replaceBy).Replace(String.Format("{0}{0}", replaceBy), replaceBy);
-            while (guid.StartsWith(replaceBy))
-            {
-                guid = guid.Substring(1);
-            }
-
-            while (guid.EndsWith(replaceBy))
-            {
-                guid = guid.Substring(0, guid.Length - 1);
-            }
-
-            return guid;
-        }
-
-        public static String RemoveSpecialCharacters(this String content, string replaceBy)
+        public static string RemoveSpecialCharacters(this string content, string replaceBy)
         {
             return Regex.Replace(content, "[^a-zA-Z0-9_.]+", replaceBy, RegexOptions.Compiled);
         }

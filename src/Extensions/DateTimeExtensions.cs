@@ -152,7 +152,11 @@ namespace Project.Base
             return date;
         }
 
-       
-
+        public static double ToEpoch(this DateTime date)
+        {
+            return date.ToUniversalTime()
+                .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
+                .TotalMilliseconds;
+        }
     }
 }

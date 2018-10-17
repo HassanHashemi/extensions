@@ -92,5 +92,12 @@ namespace ExtensionsTest
             Assert.Throws<ArgumentNullException>(() =>persianStringDate.ToDateFromPersian());
         }
 
+        [Fact]
+        public void ToEpoch_Test()
+        {
+            var date = new DateTime(2018, 10, 17,13,56,00);
+            Assert.True(date.ToEpoch() == 1539771960000);
+        }
+
     }
 }

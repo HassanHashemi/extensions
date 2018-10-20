@@ -19,7 +19,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void Shouid_Pass_GetItems_ValidInput_Test()
+        public void ShouidPass_GetItems_ValidInput()
         {
             var value = EnumExtensions.GetItems<testEnum>();
             var selected = value.Where(x => x.Value == 1).FirstOrDefault();
@@ -29,7 +29,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void Shouid_Pass_GetEnumAttribute_ValidInput_Test()
+        public void ShouidPass_GetEnumAttribute_ValidInput()
         {
             var value = typeof(testEnum).GetEnumAttribute<DescriptionAttribute>("Mahdi");
 

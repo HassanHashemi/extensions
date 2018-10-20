@@ -24,7 +24,7 @@ namespace ExtensionsTest
 
 
         [Fact]
-        public void ShouldPass_ToPersianDateTime_NewDateTimeInput_Test()
+        public void ShouldPass_ToPersianDateTime_NewDateTimeInput()
         {
             var date = new DateTime(2018, 10, 09,05,20,30);
             var result = date.ToPersianDateTime();
@@ -42,7 +42,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_ToFullStringPersianDateTime_NewDateTimeInput_Test()
+        public void ShouldPass_ToFullStringPersianDateTime_NewDateTimeInput()
         {
             var date = new DateTime(2018, 10, 09, 00, 00, 00);
             var result = date.ToFullStringPersianDateTime();
@@ -52,7 +52,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_GetDayName_ValidData_Test()
+        public void ShouldPass_GetDayName_ValidData()
         {
             var persianDayWeek = (DayOfWeek.Thursday).GetDayName();
 
@@ -60,7 +60,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_GetPersianYearAndMounth_ValidData_Test()
+        public void ShouldPass_GetPersianYearAndMounth_ValidData()
         {
             var date = new DateTime(2019, 03, 21, 01, 00,00);
             var persianYear = date.GetPersianYear();
@@ -71,7 +71,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_GetDateTimeAsDirectoryPath_ValidInput_Test()
+        public void ShouldPass_GetDateTimeAsDirectoryPath_ValidInput()
         {
             var date = new DateTime(2018,10,13);
 
@@ -79,23 +79,23 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_ToDateFromPersian_ValidInput_Test()
+        public void ShouldPass_ToDateFromPersian_ValidInput()
         {
-            var x = "1397/7/23".ToDateFromPersian();
+            var converted = "1397/7/23".ToDateFromPersian();
 
-            Assert.True("1397/7/23".ToDateFromPersian() == new DateTime(2018, 10, 15));
+            Assert.True(converted == new DateTime(2018, 10, 15));
         }
 
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        public void ShouldException_ToDateFromPersian_NullInput_Test(string persianStringDate)
+        public void ShouldThrow_ToDateFromPersian_NullInput(string persianStringDate)
         {
             Assert.Throws<ArgumentNullException>(() =>persianStringDate.ToDateFromPersian());
         }
 
         [Fact]
-        public void ToEpoch_Test()
+        public void ToEpoch()
         {
             var date = new DateTime(2018, 10, 17,13,56,00);
 

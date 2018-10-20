@@ -10,7 +10,7 @@ namespace ExtensionsTest
     {
         [Theory]
         [InlineData( "سلام !# بر همه <شما دوستان>")]
-        public void ToUrlTitle_Test(string url)
+        public void ShouldPass_ToUrlTitle(string url)
         {
             Assert.True(url.ToUrlTitle() == "سلام-بر-همه-شما-دوستان-");
         }
@@ -18,14 +18,14 @@ namespace ExtensionsTest
         [Theory]
         [InlineData("sallary")]
         [InlineData("Sallary")]
-        public void UpperFirstCharacter_Test(string word)
+        public void ShouldPass_UpperFirstCharacter(string word)
         {
             Assert.True(word.UpperFirstCharacter() == "Sallary");   
         }
 
         [Theory]
         [InlineData("Sallary")]
-        public void ReverseString_Test(string word)
+        public void ReverseString(string word)
         {
             Assert.True(word.ReverseString() == "yrallaS");
             Assert.False(word.ReverseString() == "yrallas");
@@ -33,68 +33,66 @@ namespace ExtensionsTest
 
         [Theory]
         [InlineData("salam")]
-        public void ToByteArray_Test(string word)
+        public void ToByteArray(string word)
         {
-            var Byted = word.ToByteArray();
+            var byted = word.ToByteArray();
 
-            Assert.True(Byted[0] == 115);
+            Assert.True(byted[0] == 115);
         }
 
         [Theory]
         [InlineData("salam")]
-        public void Left_Test(string word)
+        public void Left(string word)
         {
-            var Lefted = word.Left(2, false);
+            var lefted = word.Left(2, false);
 
-            Assert.True(Lefted == "sa");
+            Assert.True(lefted == "sa");
         }
 
         [Theory]
         [InlineData("how are you?")]
-        public void Left_Complete_Test(string word)
+        public void Left_Complete(string word)
         {
-            var Lefted = word.Left(5, true);
-            Assert.True(Lefted == "how");
+            var lefted = word.Left(5, true);
+
+            Assert.True(lefted == "how");
         }
 
         [Theory]
         [InlineData("salam")]
-        public void Left_AotOfRangeException_Test(string word)
+        public void ShouldThrow_OutOfRangeException_Left(string word)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => word.Left(5, true));
         }
 
         [Theory]
         [InlineData("salam")]
-        public void Right_Test(string word)
+        public void Right(string word)
         {
-            var Lefted = word.Right(2);
+            var lefted = word.Right(2);
 
-            Assert.True(Lefted == "am");
+            Assert.True(lefted == "am");
         }
 
         [Theory]
         [InlineData("salam")]
-        public void ShouldNotPass_ToIntArray_Test(string word)
+        public void ShouldThrow_FormatException_ToIntArray(string word)
         {
             Assert.Throws<FormatException>(() => word.ToIntArray());
         }
 
         [Theory]
         [InlineData("12,13")]
-        public void ShouldPass_ToIntArray_Test(string word)
+        public void ShouldPass_ToIntArray(string word)
         {
-            var x = word.ToIntArray();
-
             Assert.True(word.ToIntArray()[0] == 12);
         }
 
         [Theory]
         [InlineData("~6s&^dg+=")]
-        public void ShouldPass_UrlGuidEncode_Test(string word)
+        public void ShouldPass_UrlGuidEncode(string word)
         {
             Assert.True(word.RemoveSpecialCharacters("-") == "-6s-dg-");
         }
-
     }
 }

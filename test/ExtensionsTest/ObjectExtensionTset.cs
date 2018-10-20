@@ -17,7 +17,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_HasProperty_ValidInput_Test()
+        public void ShouldPass_HasProperty_ValidInput()
         {
             var obj = new Testboject();
 
@@ -26,7 +26,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldNullException_HasProperty_For_NullObject()
+        public void ShouldThrow_NullException_HasProperty_For_NullObject()
         {
             object nullObj = null;
 
@@ -34,7 +34,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_GetPropertyValue_ValidInput_Test ()
+        public void ShouldPass_GetPropertyValue_ValidInput ()
         {
             var obj = new Testboject()
             {
@@ -46,7 +46,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldNullException_GetPropertyValue_For_NotExistProperty()
+        public void ShouldThrow_NullException_GetPropertyValue_For_NotExistProperty()
         {
             var obj = new Testboject();
 
@@ -54,7 +54,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldNullException_GetPropertyValue_NullObject()
+        public void ShouldThrow_NullException_GetPropertyValue_NullObject()
         {
             object nullObj = null;
 
@@ -62,19 +62,17 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldPass_SetProperty_ValidInput_Test()
+        public void ShouldPass_SetProperty_ValidInput()
         {
             var obj = new Testboject();
 
             obj.SetProperty("Test1", "salam");
 
             Assert.True((string)obj.GetPropertyValue("Test1") == "salam");
-
-
         }
 
         [Fact]
-        public void ShouldNullException_SetProperty_NullObject()
+        public void ShouldThrow_NullException_SetProperty_NullObject()
         {
             object nullObj = null;
 
@@ -82,7 +80,7 @@ namespace ExtensionsTest
         }
 
         [Fact]
-        public void ShouldInvalidOperationException_SetProperty_NotExistProperty()
+        public void ShouldThrow_InvalidOperationException_SetProperty_NotExistProperty()
         {
             var obj = new Testboject();
 

@@ -23,6 +23,7 @@ namespace ExtensionsTest
         {
             var value = EnumExtensions.GetItems<testEnum>();
             var selected = value.Where(x => x.Value == 1).FirstOrDefault();
+
             Assert.True(selected.Description == "Hashemi's name");
             Assert.True(selected.Value == 1);
         }
@@ -31,8 +32,8 @@ namespace ExtensionsTest
         public void Shouid_Pass_GetEnumAttribute_ValidInput_Test()
         {
             var value = typeof(testEnum).GetEnumAttribute<DescriptionAttribute>("Mahdi");
-            Assert.True(value.Description == "my name");
 
+            Assert.True(value.Description == "my name");
         }
 
     }

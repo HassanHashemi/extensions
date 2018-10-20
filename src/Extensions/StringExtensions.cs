@@ -182,15 +182,9 @@ namespace Project.Base
 
                 return "-1";
             }
-<<<<<<< HEAD
             catch (Exception)
             {
                 throw;
-=======
-            catch (Exception e)
-            {
-                throw e;
->>>>>>> a812cc49ae0bcd20803d95e1c8aec53511efe172
             }
         }
 
@@ -222,16 +216,6 @@ namespace Project.Base
             var charArray = value.ToCharArray();
             Array.Reverse(charArray);
             return new string(charArray);
-        }
-
-        public static TResult Convert<TResult>(this string value)
-        {
-            return ConversionHelper.FromString<TResult>(value);
-        }
-
-        public static IEnumerable<TResult> Convert<TSource, TResult>(this IEnumerable<TSource> values)
-        {
-            return values.Select(s => s.ToString().Convert<TResult>());
         }
 
         public static byte[] ToByteArray(this string value)
@@ -269,7 +253,7 @@ namespace Project.Base
                 {
                     try
                     {
-                        array.Add(System.Convert.ToInt32(i));
+                        array.Add(Convert.ToInt32(i));
                     }
                     catch
                     {

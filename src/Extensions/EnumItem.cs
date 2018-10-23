@@ -1,4 +1,4 @@
-﻿namespace MySolution.Base.Extensions
+﻿namespace Extensions
 {
     public class EnumItem
     {

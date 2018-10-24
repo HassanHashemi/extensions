@@ -5,50 +5,45 @@ namespace System
 {
     public static class ObjectExtensions
     {
-        public static TAttributeType GetEnumAttribute<TAttributeType>(this Type enumType, string memberName)
-        {
-            var memInfo = enumType.GetMember(memberName);
-            var attributes = memInfo[0].GetCustomAttributes(typeof(TAttributeType), false);
-
-            return (TAttributeType)attributes[0];
-        }
-
         public static bool HasProperty(this object source, string propertyName)
-        {
-            if (source == null)
-            {
-                return false;
-            }
-
-            return source.GetType()
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                        .Any(p => p.Name == propertyName);
-        }
-
-        public static object GetPropertyVaue(this object source, string name)
         {
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }
+            return source.GetType()
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .Any(p => p.Name == propertyName);
+        }
 
+        public static object GetPropertyValue(this object source, string name)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
             var type = source.GetType();
             var property = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .FirstOrDefault(p => p.Name == name);
-
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
             return property.GetValue(source);
         }
 
         public static void SetProperty(this object source, string propertyName, object value)
         {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
             var type = source.GetType();
             var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-
             if (property == null)
             {
                 throw new InvalidOperationException($"property {propertyName} not found.");
             }
-
             property.SetValue(source, value);
         }
     }

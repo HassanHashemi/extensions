@@ -17,10 +17,6 @@
         /// <typeparam name="T">The type to convert to. This can be a <see cref="Nullable"/> type.</typeparam>
         /// <param name="value">The string to convert.</param>
         /// <returns>An instance of the given <typeparamref name="T"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter",
-            Justification = "Een ontwerp met 'object ConvertFromString(Type type, string value)' is " +
-            "uiterst onhandig in deze situatie.")]
-        [DebuggerStepThrough]
         public static T FromString<T>(string value)
         {
             return FromString<T>(value, Thread.CurrentThread.CurrentCulture);
@@ -32,10 +28,7 @@
         /// <typeparam name="T">The type to convert to. This can be a <see cref="Nullable"/> type.</typeparam>
         /// <param name="value">The string to convert.</param>
         /// <returns>An instance of the given <typeparamref name="T"/>.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter",
-            Justification = "Een ontwerp met 'object ConvertFromString(Type type, string value)' is " +
-            "uiterst onhandig in deze situatie.")]
-        [DebuggerStepThrough]
+        
         public static T FromString<T>(string value, CultureInfo culture)
         {
             TypeConverter converter = GetConverterForType(typeof(T));

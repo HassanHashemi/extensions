@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Resources;
 
-namespace MySolution.Base.Extensions
+namespace Extensions
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {

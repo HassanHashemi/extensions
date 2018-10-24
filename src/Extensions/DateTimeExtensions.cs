@@ -13,6 +13,8 @@ namespace Project.Base
         public int Hours { get; set; }
         public int Minutes { get; set; }
         public int Seconds { get; set; }
+
+        public string Full => $"{this.Year}/{this.Month}/{this.Day}";
     }
 
     public static class DateTimeExtensions

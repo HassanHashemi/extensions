@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-namespace Project.Base
+namespace Extensions
 {
     public static class StringExtensions
     {

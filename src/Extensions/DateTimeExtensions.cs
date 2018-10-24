@@ -1,11 +1,20 @@
 ﻿using System;
-using System.Text;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Project.Base
 {
+    public class PersianDateWrapper
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
+        public int Seconds { get; set; }
+    }
+
     public static class DateTimeExtensions
     {
         public static string ToPersianDate(this DateTime date)
@@ -17,19 +26,35 @@ namespace Project.Base
                 calendar.GetDayOfMonth(date).ToString().PadLeft(2, '0'));
         }
 
-        public static string ToPersianDateTime(this DateTime date)
+        public static PersianDateWrapper ToPersian(this DateTime source)
         {
             var calendar = new PersianCalendar();
+            return new PersianDateWrapper()
+            {
+                Year = calendar.GetYear(source),
+                Month = calendar.GetMonth(source),
+                Day = calendar.GetDayOfMonth(source),
+                Hours = calendar.GetHour(source),
+                Minutes = calendar.GetMinute(source),
+                Seconds = calendar.GetSecond(source),
+            };
+        }
+
+        public static string ToPersianDateTime(this DateTime date)
+        {
+            var persian = ToPersian(date);
             return string.Format("{0}/{1}/{2}-{3}:{4}",
-                calendar.GetYear(date),
-                calendar.GetMonth(date).ToString().PadLeft(2, '0'),
-                calendar.GetDayOfMonth(date).ToString().PadLeft(2, '0'),
-                date.Hour.ToString().PadLeft(2, '0'),
-                date.Minute.ToString().PadLeft(2, '0'));
+                persian.Year,
+                persian.Month.ToString().PadLeft(2, '0'),
+                persian.Day.ToString().PadLeft(2, '0'),
+                persian.Hours.ToString().PadLeft(2, '0'),
+                persian.Minutes.ToString().PadLeft(2, '0'));
         }
 
         public static string ToFullStringPersianDateTime(this DateTime date)
-            => $"{new PersianCalendar().GetDayOfWeek(date).GetDayName()} {date.ToPersianDate()} {(date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "")}";
+        {
+            return $"{new PersianCalendar().GetDayOfWeek(date).GetDayName()} {date.ToPersianDate()} {( date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "" )}";
+        }
 
         public static string GetDayName(this DayOfWeek day)
         {

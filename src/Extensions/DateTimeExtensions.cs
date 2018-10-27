@@ -32,9 +32,9 @@ namespace Extensions
                 Seconds = calendar.GetSecond(source),
             };
         }
+
         public static string ToPersianDate(this DateTime date)
         {
-            
             var persian = ToPersian(date);
             return string.Format("{0}/{1}/{2}",
                 persian.Year,
@@ -89,8 +89,8 @@ namespace Extensions
             {
                 return "چهارشنبه";
             }
-            return string.Empty;
 
+            return string.Empty;
         }
 
         public static int GetPersianYear(this DateTime date)

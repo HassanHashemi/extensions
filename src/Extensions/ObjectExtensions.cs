@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 
-namespace System
+namespace Extensions
 {
     public static class ObjectExtensions
     {

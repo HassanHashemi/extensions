@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Project.Base.Extensions
+namespace Extensions
 {
     public static class TypeExtensions
     {

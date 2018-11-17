@@ -8,7 +8,7 @@ namespace Extensions.HashtagUtility
 {
     public static class HashtagUtility
     {
-        public static List<string> TagExteraction(string input)
+        public static IEnumerable<string> TagExteraction(string input)
         {
             var timeout = new TimeSpan(0, 0, 0, 0, 100);
             return Regex.Matches(input, @"\b?\#\w*\b", RegexOptions.None, timeout)

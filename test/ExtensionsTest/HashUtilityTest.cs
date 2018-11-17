@@ -1,4 +1,4 @@
-﻿using Extensions.hashtagUtility;
+﻿using Extensions.HashtagUtility;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +9,13 @@ namespace ExtensionsTest
     public class HashUtilityTest
     {
         [Theory]
-        [InlineData("در جریان #قتل #خاشقچی #دولت_عربستان  مقصر شناخته شده است! اما این #دیوث ها زیر بار نمی روند البته این مهم نیست چون #وهابیت=انگلیسی هست!")]
+        [InlineData("در جریان #قتل #خاشقچی #دولت_عربستان  مقصر شناخته شده است! اما این #عرب ها زیر بار نمی روند البته این مهم نیست چون #وهابیت=انگلیسی هست!")]
         public void Should_Pass_TagExteraction(string data)
         {
-            var hashtag = new HashtagUtility();
-            var tagList = hashtag.TagExteraction(data);
+
+            var tagList = HashtagUtility.TagExteraction(data);
             Assert.True(tagList[2] == "#دولت_عربستان");
-            Assert.False(tagList[3] == "#دیوث ها");
+            Assert.False(tagList[3] == "#عرب ها");
             Assert.True(tagList[4] == "#وهابیت");
         }
     }

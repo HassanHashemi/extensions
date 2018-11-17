@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Extensions.hashtagUtility
+namespace Extensions.HashtagUtility
 {
-    public class HashtagUtility
+    public static class HashtagUtility
     {
-        public List<string> TagExteraction(string input)
+        public static List<string> TagExteraction(string input)
         {
             return Regex.Matches(input, @"\b?\#\w*\b")
                     .Cast<Match>()

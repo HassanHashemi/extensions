@@ -110,7 +110,7 @@ namespace Extensions.Helper
 		{
 			if (_period.Years < 1 && this._period.Months > 0)
 			{
-				Result = $"{_period.Years} ماه پیش";
+				Result = $"{_period.Months} ماه پیش";
 			}
 
 			return this;
@@ -120,7 +120,7 @@ namespace Extensions.Helper
 		{
 			if (_period.Months < 1 && _period.Weeks > 0)
 			{
-				Result = $"{_period.Years} هفته پیش";
+				Result = $"{_period.Weeks} هفته پیش";
 			}
 
 			return this;
@@ -130,7 +130,7 @@ namespace Extensions.Helper
 		{
 			if (_period.Weeks < 1 && _period.Days > 0)
 			{
-				Result = $"{_period.Years} روز پیش";
+				Result = $"{_period.Days} روز پیش";
 			}
 
 			return this;
@@ -140,7 +140,7 @@ namespace Extensions.Helper
 		{
 			if (_period.Days < 1 && _period.Hours > 0)
 			{
-				Result = $"{_period.Years} ساعت پیش";
+				Result = $"{_period.Hours} ساعت پیش";
 			}
 
 			return this;
@@ -150,7 +150,7 @@ namespace Extensions.Helper
 		{
 			if (_period.Hours < 1 && _period.Minutes > 0)
 			{
-				Result = $"{_period.Years} دقیقه پیش";
+				Result = $"{_period.Minutes} دقیقه پیش";
 			}
 
 			return this;

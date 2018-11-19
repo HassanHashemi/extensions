@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Extensions;
 using Xunit;
-using Extensions;
 
 namespace ExtensionsTest
 {
@@ -25,6 +24,13 @@ namespace ExtensionsTest
         public void Should_Pass_ReplaceArabicCharacters_ReplaceArabicCharacters(string data)
         {
             Assert.True(data.ReplaceArabicCharacters().RemoveDiacriticsAndNotAlpha() == "انشانویسییکهنراستکهالبتهمویدکارسختنویسندگانمیباشداننوشتهایموردقبولاستکهروانباشد");
+        }
+
+        [Theory]
+        [InlineData("خبر24")]
+        public void Should_KeepNumbers(string data)
+        {
+            Assert.True(data.RemoveDiacriticsAndNotAlpha() == "خبر24");
         }
     }
 }

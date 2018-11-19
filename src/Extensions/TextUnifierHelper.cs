@@ -23,7 +23,7 @@ namespace Extensions
 
         public static string RemoveDiacriticsAndNotAlpha(this string source)
         {
-            return Replace(source, @"[ًٌٍَُِّـ\W\s،؛,ء_]", string.Empty);
+            return Replace(source, @"[ًٌٍَُِّـ\W\s،؛,ء_]", string.Empty).ToLower();
         }
 
         public static string ReplaceArabicCharacters(this string source)
@@ -33,7 +33,7 @@ namespace Extensions
                 source = Replace(source, arabicPattern, ReplacementMap[arabicPattern]);
             }
 
-            return source;
+            return source.ToLower();
         }
     }
 }

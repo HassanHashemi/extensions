@@ -18,9 +18,6 @@ namespace Extensions
             { @"[ك]", "ک" }
         };
 
-        private static string Replace(string input, string pattern, string value) =>
-            Regex.Replace(input, pattern, value, RegexOptions.None, _defaultTimeOut);
-
         public static string RemoveDiacriticsAndNotAlpha(this string source)
         {
             return Replace(source, @"[ًٌٍَُِّـ\W\s،؛,ء_]", string.Empty).ToLower();
@@ -35,5 +32,8 @@ namespace Extensions
 
             return source.ToLower();
         }
+
+        private static string Replace(string input, string pattern, string value) =>
+            Regex.Replace(input, pattern, value, RegexOptions.None, _defaultTimeOut);
     }
 }

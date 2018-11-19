@@ -50,10 +50,20 @@ namespace ExtensionsTest
 
         [Theory]
         [InlineData("Mohammad")]
+        [InlineData("Moha`mmad")]
+        [InlineData("Moha`mmad]")]
         public void Should_Pass_ForEnglishWords_WithBigLetters(string data)
         {
             var value = data.RemoveDiacriticsAndNotAlpha();
             Assert.True(value == "mohammad");
+        }
+
+        [Theory]
+        [InlineData("Mohammad_Aّعلیّ")]
+        public void Should_Pass_ForCombinedWords(string data)
+        {
+            var value = data.RemoveDiacriticsAndNotAlpha().ReplaceArabicCharacters();
+            Assert.True(value == "mohammadaعلی");
         }
     }
 }

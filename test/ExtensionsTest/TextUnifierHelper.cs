@@ -32,5 +32,28 @@ namespace ExtensionsTest
         {
             Assert.True(data.RemoveDiacriticsAndNotAlpha() == "خبر24");
         }
+
+        [Theory]
+        [InlineData("خبــــر24")]
+        public void Should_Remove_LongCharacters(string data)
+        {
+            Assert.True(data.RemoveDiacriticsAndNotAlpha() == "خبر24");
+        }
+
+        [Theory]
+        [InlineData("mohammad!")]
+        public void Should_Pass_ForSimpleEnglish(string data)
+        {
+            var value = data.RemoveDiacriticsAndNotAlpha();
+            Assert.True(value == "mohammad");
+        }
+
+        [Theory]
+        [InlineData("Mohammad")]
+        public void Should_Pass_ForEnglishWords_WithBigLetters(string data)
+        {
+            var value = data.RemoveDiacriticsAndNotAlpha();
+            Assert.True(value == "mohammad");
+        }
     }
 }

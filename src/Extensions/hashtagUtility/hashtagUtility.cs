@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Extensions.HashtagUtility
+namespace Extensions
 {
     public static class HashtagUtility
     {

@@ -53,6 +53,5 @@ namespace ExtensionsTest
             stream.Close();
             await Assert.ThrowsAsync<InvalidOperationException>(() => stream.GetMd5Async());
         }
-
     }
 }

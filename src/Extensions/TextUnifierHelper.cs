@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Extensions
@@ -9,13 +8,13 @@ namespace Extensions
     {
         private static readonly TimeSpan _defaultTimeOut = TimeSpan.FromMilliseconds(300);
 
-        private static Dictionary<string, string> ReplacementMap = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> ReplacementMap = new Dictionary<string, string>()
         {
-            { @"[آأإ]", "ا" },
-            { @"[ي]", "ی" },
-            { @"[ة]", "ه" },
-            { @"[ؤ]", "و" },
-            { @"[ك]", "ک" }
+            { "[آأإ]", "ا" },
+            { "[ي]", "ی" },
+            { "[ة]", "ه" },
+            { "[ؤ]", "و" },
+            { "[ك]", "ک" }
         };
 
         public static string RemoveDiacriticsAndNotAlpha(this string source)

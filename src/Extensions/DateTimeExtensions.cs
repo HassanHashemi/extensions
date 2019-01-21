@@ -126,5 +126,18 @@ namespace Extensions
                 .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
                 .TotalMilliseconds;
         }
+
+        public static DateTime ToDateTimeFromPersian(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException();
+            }
+
+            value = Regex.Replace(value, @".*?([0-9]{4}/[0-9]{2}/[0-9]{2})\s*([0-9]{2}:[0-9]{2}).*", "$1 $2");
+            var date = value.Split(' ')[0].Split('/').Select(d => int.Parse(d)).ToArray();
+            var time = value.Split(' ')[1].Split(':').Select(d => int.Parse(d)).ToArray();
+            return new PersianCalendar().ToDateTime(date[0], date[1], date[2], time[0], time[1],0,0);
+        }
     }
 }

@@ -102,5 +102,12 @@ namespace ExtensionsTest
             Assert.True(date.ToEpoch() == 1539771960000);
         }
 
+        [Fact]
+        public void Should_Pass_ToDateTimeFromPersian()
+        {
+            var persianDateTime = "1397/11/01 10:46";
+
+            Assert.True(persianDateTime.ToDateTimeFromPersian() == new DateTime(2019, 01, 21, 10, 46, 0, 0));
+        }
     }
 }

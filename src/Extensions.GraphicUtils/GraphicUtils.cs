@@ -14,17 +14,6 @@ using SixLabors.ImageSharp.Formats.Gif;
 
 namespace Extensions.GraphicUtils
 {
-    /// <summary>
-    /// Determine the Type Of Image
-    /// </summary>
-    public enum ImageFormats
-    {
-        UnKnown = 1,
-        Jpeg = 5,
-        Png = 10,
-        Gif = 15
-    }
-
     public class GraphicUtils
     {
         /// <summary>
@@ -36,11 +25,11 @@ namespace Extensions.GraphicUtils
         /// <param name="format">Extention of Output(Resized) Image, if Passing as `UnKnown` it will Set Corresponding by outputPath Parameter</param>
         /// <param name="IsGrayscale">Specifies whether the output image is color or Grayscale</param>
         /// <remarks>Passing zero for one of height or width within the resize options will automatically preserve the aspect ratio of the original image or the nearest possible ratio.</remarks>
-        public static void Resize(Stream inputStream, Stream outputStream, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool IsGrayscale = false)
+        public static void Resize(Stream inputStream, Stream outputStream, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool isGrayscale = false)
         {
-            using (Image<Argb32> image = Image.Load<Argb32>(inputStream))
+            using (var image = Image.Load<Argb32>(inputStream))
             {
-                if (IsGrayscale)
+                if (isGrayscale)
                 {
                     image.Mutate(ctx => ctx
                                         .Resize(options)
@@ -51,7 +40,7 @@ namespace Extensions.GraphicUtils
                     image.Mutate(ctx => ctx
                                         .Resize(options));
                 }
-                FileStream fileStream = outputStream as FileStream;
+                var fileStream = outputStream as FileStream;
                 image.Save(outputStream, GetFormat(format, Path.GetExtension(fileStream.Name)));
             }
         }
@@ -65,16 +54,21 @@ namespace Extensions.GraphicUtils
         /// <param name="format">Extention of Output(Resized) Image, if Passing as `UnKnown` it will Set Corresponding by outputPath Parameter</param>
         /// <param name="IsGrayscale">Specifies whether the output image is color or Grayscale</param>
         /// <remarks>Passing zero for one of height or width within the resize options will automatically preserve the aspect ratio of the original image or the nearest possible ratio.</remarks>
-        public static async Task Resize(string inputPath, string outputPath, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool IsGrayscale = false)
+        public static async Task Resize(string inputPath, string outputPath, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool isGrayscale = false)
         {
+            Guard.NotNullOrEmpty(inputPath, nameof(inputPath));
+            Guard.NotNullOrEmpty(outputPath, nameof(outputPath));
 
             byte[] inputStream;
-            using (FileStream SourceStream = File.Open(inputPath, FileMode.Open))
+            using (var sourceStream = File.Open(inputPath, FileMode.Open))
             {
-                inputStream = new byte[SourceStream.Length];
-                await SourceStream.ReadAsync(inputStream, 0, (int)SourceStream.Length);
+                inputStream = new byte[sourceStream.Length];
+                await sourceStream.ReadAsync(inputStream, 0, (int)sourceStream.Length);
+                using (var outStream = new FileStream(outputPath, FileMode.Create))
+                {
+                    Resize(new MemoryStream(inputStream), outStream, options, format, isGrayscale);
+                }
             }
-            Resize(new MemoryStream(inputStream), new FileStream(outputPath, FileMode.Create), options, format, IsGrayscale);
         }
 
 
@@ -87,19 +81,24 @@ namespace Extensions.GraphicUtils
         /// <param name="targetHeight">Height of Output(Resized) Image</param>
         /// <param name="format">Extention of Output(Resized) Image</param>
         /// <returns>Return is Void , It Save Image In Physical Output path</returns>
-        public static async Task Resize(string inputPath, string outputPath, int targetWidth, int targetHeight, ImageFormats format = ImageFormats.UnKnown)
+        public static Task Resize(string inputPath, string outputPath, int targetWidth, int targetHeight, ImageFormats format = ImageFormats.UnKnown)
         {
             Guard.NotNullOrEmpty(inputPath, nameof(inputPath));
-            Guard.NotNullOrEmpty(inputPath, nameof(outputPath));
+            Guard.NotNullOrEmpty(outputPath, nameof(outputPath));
             Guard.Positive(targetWidth, nameof(targetWidth));
             Guard.Positive(targetHeight, nameof(targetHeight));
+
             var options = new ResizeOptions
             {
                 Size = new Size(targetWidth, targetHeight),
-                Mode = ResizeMode.Min
+                Mode = ResizeMode.Stretch
             };
-
-            await Resize(inputPath, outputPath, options);
+            
+            return Resize(inputPath, outputPath, options);
+        }
+        public static void GetInfo(string outputPath)
+        {
+            Image<Rgba32> image = Image.Load(outputPath);
         }
 
         private static IImageEncoder GetFormat(ImageFormats format, string extension = null)
@@ -112,7 +111,7 @@ namespace Extensions.GraphicUtils
                     case "jpeg":
                         return new JpegEncoder();
 
-                    case "pnj":
+                    case "png":
                         return new PngEncoder();
 
                     case "gif":

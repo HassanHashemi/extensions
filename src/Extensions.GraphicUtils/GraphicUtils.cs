@@ -1,16 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using System.Linq;
-using SixLabors.ImageSharp;
-using System.Net.Http;
-using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Formats.Jpeg;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Gif;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
-using SixLabors.ImageSharp.Formats.Gif;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Extensions.GraphicUtils
 {
@@ -93,7 +91,7 @@ namespace Extensions.GraphicUtils
                 Size = new Size(targetWidth, targetHeight),
                 Mode = ResizeMode.Stretch
             };
-            
+
             return Resize(inputPath, outputPath, options);
         }
         public static void GetInfo(string outputPath)

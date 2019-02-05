@@ -96,11 +96,7 @@ namespace Extensions.GraphicUtils
             
             return Resize(inputPath, outputPath, options);
         }
-        public static void GetInfo(string outputPath)
-        {
-            Image<Rgba32> image = Image.Load(outputPath);
-        }
-
+       
         private static IImageEncoder GetFormat(ImageFormats format, string extension = null)
         {
             if (format == ImageFormats.UnKnown)

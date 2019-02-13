@@ -1,6 +1,7 @@
 using Extensions;
 using System;
 using System.Globalization;
+using System.Linq;
 using Xunit;
 
 namespace ExtensionsTest
@@ -48,7 +49,18 @@ namespace ExtensionsTest
             var result = date.ToFullStringPersianDateTime();
             var persianDayOfWeek = result.Split(' ')[0];
 
-            Assert.True(persianDayOfWeek  == "سه");
+            Assert.True(persianDayOfWeek == "سه");
+        }
+
+        [Fact]
+        public void ShouldPass_ToFullStringPersianDate()
+        {
+            var date = new DateTime(2018, 10, 09, 00, 00, 00);
+            var result = date.ToFullStringPersianDate();
+            var persianDayOfWeek = result.Split(' ');
+
+            Assert.True(persianDayOfWeek[3] == "مهر");
+            Assert.True(int.TryParse(persianDayOfWeek.Last(),out _));
         }
 
         [Fact]

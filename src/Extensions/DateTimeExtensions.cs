@@ -56,9 +56,14 @@ namespace Extensions
         public static string ToFullStringPersianDateTime(this DateTime date)
         {
             var persian = ToPersian(date);
-            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {( date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "" )}";
+            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {(date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "")}";
         }
 
+        public static string ToFullStringPersianDate(this DateTime date)
+        {
+            var persian = ToPersian(date);
+            return $"{date.DayOfWeek.GetDayName()} {persian.Day} {GetMonthName(persian.Month)} {persian.Year}";
+        }
         public static string GetDayName(this DayOfWeek day)
         {
             if (day == DayOfWeek.Friday)
@@ -91,6 +96,25 @@ namespace Extensions
             }
 
             return string.Empty;
+        }
+        public static string GetMonthName(this int Month)
+        {
+            switch (Month)
+            {
+                case 1: return "فروردین";
+                case 2: return "اردیبهشت";
+                case 3: return "خرداد";
+                case 4: return "تیر";
+                case 5: return "مرداد";
+                case 6: return "شهریور";
+                case 7: return "مهر";
+                case 8: return "آبان";
+                case 9: return "آذر";
+                case 10: return "دی";
+                case 11: return "بهمن";
+                case 12: return "اسفند";
+                default: return string.Empty;
+            }
         }
 
         public static int GetPersianYear(this DateTime date)
@@ -137,7 +161,7 @@ namespace Extensions
             value = Regex.Replace(value, @".*?([0-9]{4}/[0-9]{2}/[0-9]{2})\s*([0-9]{2}:[0-9]{2}).*", "$1 $2");
             var date = value.Split(' ')[0].Split('/').Select(d => int.Parse(d)).ToArray();
             var time = value.Split(' ')[1].Split(':').Select(d => int.Parse(d)).ToArray();
-            return new PersianCalendar().ToDateTime(date[0], date[1], date[2], time[0], time[1],0,0);
+            return new PersianCalendar().ToDateTime(date[0], date[1], date[2], time[0], time[1], 0, 0);
         }
     }
 }

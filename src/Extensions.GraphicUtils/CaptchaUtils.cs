@@ -11,19 +11,17 @@ namespace Extensions.GraphicUtils
 {
     public class CaptchaUtils
     {
-        public string GenerateCaptchaBase64Image(string code)
+        public static string GenerateCaptchaBase64Image(string code)
         {
+            FontCollection fonts = new FontCollection();
+            FontFamily font = fonts.Install(@"arial.ttf");
+            var _font = font.CreateFont(7, FontStyle.Italic);
             var stream = new MemoryStream();
             using (Image<Rgba32> img = new Image<Rgba32>(80, 40))
             {
-                PathBuilder pathBuilder = new PathBuilder();
-                pathBuilder.SetOrigin(new PointF(30, 0));
-                pathBuilder.AddBezier(new PointF(5, 35), new PointF(20, 5), new PointF(20, 5), new PointF(35, 35));
-                IPath path = pathBuilder.Build();
-                var font = SystemFonts.CreateFont("Arial", 7, FontStyle.Italic);
-                using (var img2 = img.Clone(ctx => ctx.ApplyScalingWaterMark(font, code, Rgba32.Black, 2, true)))
+                using (var img2 = img.Clone(ctx => ctx.ApplyScalingWaterMark(_font, code, Rgba32.Black, 2, true)))
                 {
-                    img2.SaveAsBmp(stream);
+                    img2.SaveAsPng(stream);
                 }
             }
 

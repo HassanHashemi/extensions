@@ -15,6 +15,45 @@ namespace Extensions.GraphicUtils
     public class GraphicUtils
     {
         /// <summary>
+        /// Get size of image from byte array image .
+        /// </summary>
+        /// <param name="binaryImage">Byte array of image</param>
+        public static Size GetImageSizeFromByteArray(byte[] binaryImage)
+        {
+            var stream = new MemoryStream(binaryImage);
+            using (var image = Image.Load<Argb32>(stream))
+            {
+                return image.Size();
+            }
+        }
+
+        /// <summary>
+        /// GenerateThumbnail from memorystream of image .
+        /// </summary>
+        /// <param name="inputStream">stream of image</param>
+        /// <param name="width">width of thumbnail </param>
+        /// <param name="height">height of thumbnail</param>
+        public static MemoryStream GenerateThumbnail(MemoryStream inputStream, int width, int height)
+        {
+            var thumbStream = new MemoryStream();
+            using (var image = Image.Load<Argb32>(inputStream))
+            {
+                image.Mutate(ctx => ctx
+                                    .Resize(new ResizeOptions
+                                    {
+                                        Size = new Size
+                                        {
+                                            Height = height,
+                                            Width = width
+                                        }
+                                    }));
+                image.SaveAsJpeg(thumbStream);
+            }
+
+            return thumbStream;
+        }
+
+        /// <summary>
         /// Resizes an image in accordance with the given <see cref="ResizeOptions"/>.
         /// </summary>
         /// <param name="inputStream">Stream of Input(Original) Image</param>
@@ -94,7 +133,7 @@ namespace Extensions.GraphicUtils
 
             return Resize(inputPath, outputPath, options);
         }
-       
+
         private static IImageEncoder GetFormat(ImageFormats format, string extension = null)
         {
             if (format == ImageFormats.UnKnown)

@@ -5,6 +5,11 @@ namespace System
 {
     public static class EnumerableExtensions
     {
+        public static IEnumerable<T> Yield<T>(this T item)
+        {
+            yield return item;
+        }
+
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             foreach (var item in source)

@@ -3,27 +3,26 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
-using SixLabors.Shapes;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Extensions.GraphicUtils
 {
-    public class CaptchaUtils
+    public static class CaptchaUtils
     {
-        private static Random rng = new Random();
-
         public static string GenerateCaptchaBase64Image(string code)
         {
             Guard.NotNullOrEmpty(code, nameof(code));
 
             var positions = new List<byte> { 15, 7, 16, 23, 13 };
-            positions = ShuffleList<byte>(positions);
-            FontCollection fonts = new FontCollection();
-            FontFamily font = fonts.Install(@"arial.ttf");
+            positions = ShuffleList(positions);
+
+            var fonts = new FontCollection();
+            var font = fonts.Install("arial.ttf");
             var _font = font.CreateFont(16, FontStyle.Italic);
             var stream = new MemoryStream();
+
             using (Image<Rgba32> img = new Image<Rgba32>(80, 40))
             {
                 img.Mutate(x => x.DrawLines(Rgba32.Gray, 2, new PointF(0, 10), new PointF(80, 10)));

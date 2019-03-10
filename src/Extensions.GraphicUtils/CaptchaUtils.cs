@@ -23,7 +23,7 @@ namespace Extensions.GraphicUtils
             var _font = font.CreateFont(16, FontStyle.Italic);
             var stream = new MemoryStream();
 
-            using (Image<Rgba32> img = new Image<Rgba32>(80, 40))
+            using (var img = new Image<Rgba32>(80, 40))
             {
                 img.Mutate(x => x.DrawLines(Rgba32.Gray, 2, new PointF(0, 10), new PointF(80, 10)));
                 img.Mutate(x => x.DrawLines(Rgba32.Gray, 2, new PointF(0, 30), new PointF(80, 30)));

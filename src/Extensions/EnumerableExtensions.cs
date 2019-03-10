@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace System
 {
@@ -8,6 +9,16 @@ namespace System
         public static IEnumerable<T> Yield<T>(this T item)
         {
             yield return item;
+        }
+
+        public static async Task<IEnumerable<T>> ForEach<T>(this IEnumerable<T> source, Func<T, Task> action)
+        {
+            foreach (var item in source)
+            {
+                await action(item);
+            }
+
+            return source;
         }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)

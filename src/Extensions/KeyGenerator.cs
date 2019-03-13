@@ -7,7 +7,7 @@ namespace Extensions
     public static class KeyGenerator
     {
         private static char[] _chars =
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_".ToCharArray();
 
         /// <summary>
         /// Generate a random URL friendly string (youtube like)

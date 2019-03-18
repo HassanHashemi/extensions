@@ -54,6 +54,29 @@ namespace Extensions.GraphicUtils
         }
 
         /// <summary>
+        /// ReduseQuality from memorystream of image .
+        /// </summary>
+        /// <param name="inputStream">stream of image</param>
+        /// <param name="quality">quality of output image</param>
+        public static MemoryStream ReduseQuality(MemoryStream inputStream, int quality)
+        {
+            if (quality < 0 || quality > 100)
+            {
+                new ArgumentException(nameof(quality));
+            }
+
+            var thumbStream = new MemoryStream();
+            using (var image = Image.Load<Argb32>(inputStream))
+            {
+                var encoder = new JpegEncoder();
+                encoder.Quality = quality;
+                image.SaveAsJpeg(thumbStream, encoder);
+            }
+
+            return thumbStream;
+        }
+
+        /// <summary>
         /// Resizes an image in accordance with the given <see cref="ResizeOptions"/>.
         /// </summary>
         /// <param name="inputStream">Stream of Input(Original) Image</param>

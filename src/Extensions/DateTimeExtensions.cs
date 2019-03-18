@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Extensions
 {
-    public class PersianDateWrapper
+	public class PersianDateWrapper
     {
         public int Year { get; set; }
         public int Month { get; set; }
@@ -163,5 +163,11 @@ namespace Extensions
             var time = value.Split(' ')[1].Split(':').Select(d => int.Parse(d)).ToArray();
             return new PersianCalendar().ToDateTime(date[0], date[1], date[2], time[0], time[1], 0, 0);
         }
-    }
+
+		public static string ToDurationSeo(this double duration)
+		{
+			var timeValue = TimeSpan.FromSeconds(duration);
+			return string.Format("{0:hh\\:mm\\:ss}", timeValue);
+		}
+	}
 }

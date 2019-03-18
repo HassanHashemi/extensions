@@ -1,6 +1,5 @@
 using Extensions;
 using System;
-using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -27,7 +26,7 @@ namespace ExtensionsTest
         [Fact]
         public void ShouldPass_ToPersianDateTime_NewDateTimeInput()
         {
-            var date = new DateTime(2018, 10, 09,05,20,30);
+            var date = new DateTime(2018, 10, 09, 05, 20, 30);
             var result = date.ToPersianDateTime();
             var items = result.Split("/");
             var year = items[0];
@@ -60,13 +59,13 @@ namespace ExtensionsTest
             var persianDayOfWeek = result.Split(' ');
 
             Assert.True(persianDayOfWeek[3] == "مهر");
-            Assert.True(int.TryParse(persianDayOfWeek.Last(),out _));
+            Assert.True(int.TryParse(persianDayOfWeek.Last(), out _));
         }
 
         [Fact]
         public void ShouldPass_GetDayName_ValidData()
         {
-            var persianDayWeek = (DayOfWeek.Thursday).GetDayName();
+            var persianDayWeek = ( DayOfWeek.Thursday ).GetDayName();
 
             Assert.True(persianDayWeek == "پنج شنبه");
         }
@@ -74,7 +73,7 @@ namespace ExtensionsTest
         [Fact]
         public void ShouldPass_GetPersianYearAndMounth_ValidData()
         {
-            var date = new DateTime(2019, 03, 21, 01, 00,00);
+            var date = new DateTime(2019, 03, 21, 01, 00, 00);
             var persianYear = date.GetPersianYear();
             var persianMonth = date.GetPersianMonth();
 
@@ -85,7 +84,7 @@ namespace ExtensionsTest
         [Fact]
         public void ShouldPass_GetDateTimeAsDirectoryPath_ValidInput()
         {
-            var date = new DateTime(2018,10,13);
+            var date = new DateTime(2018, 10, 13);
 
             Assert.True(date.GetDateTimeAsDirectoryPath() == "2018/10/13");
         }
@@ -103,13 +102,13 @@ namespace ExtensionsTest
         [InlineData("")]
         public void ShouldThrow_ToDateFromPersian_NullInput(string persianStringDate)
         {
-            Assert.Throws<ArgumentNullException>(() =>persianStringDate.ToDateFromPersian());
+            Assert.Throws<ArgumentNullException>(() => persianStringDate.ToDateFromPersian());
         }
 
         [Fact]
         public void ToEpoch()
         {
-            var date = new DateTime(2018, 10, 17,13,56,00);
+            var date = new DateTime(2018, 10, 17, 13, 56, 00);
 
             Assert.True(date.ToEpoch() == 1539771960000);
         }
@@ -120,6 +119,26 @@ namespace ExtensionsTest
             var persianDateTime = "1397/11/01 10:46";
 
             Assert.True(persianDateTime.ToDateTimeFromPersian() == new DateTime(2019, 01, 21, 10, 46, 0, 0));
+        }
+
+        [Fact]
+        public void Should_Display_Minute_Second()
+        {
+            Assert.True(466.0.ToDurationSeo() == "07:46");
+            Assert.True(3599.0.ToDurationSeo() == "59:59");
+        }
+
+        [Fact]
+        public void Should_Display_Second()
+        {
+            Assert.True(30.0.ToDurationSeo() == "00:30");
+            Assert.True(0.ToDurationSeo() == "00:00");
+        }
+
+        [Fact]
+        public void Should_Display_Hour_Minute_Second()
+        {
+            Assert.True(10800.0.ToDurationSeo() == "03:00:00");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Extensions
 {
-    public class PersianDateWrapper
+	public class PersianDateWrapper
     {
         public int Year { get; set; }
         public int Month { get; set; }
@@ -56,7 +56,7 @@ namespace Extensions
         public static string ToFullStringPersianDateTime(this DateTime date)
         {
             var persian = ToPersian(date);
-            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {(date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "")}";
+            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {( date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "" )}";
         }
 
         public static string ToFullStringPersianDate(this DateTime date)
@@ -162,6 +162,25 @@ namespace Extensions
             var date = value.Split(' ')[0].Split('/').Select(d => int.Parse(d)).ToArray();
             var time = value.Split(' ')[1].Split(':').Select(d => int.Parse(d)).ToArray();
             return new PersianCalendar().ToDateTime(date[0], date[1], date[2], time[0], time[1], 0, 0);
+        }
+
+        public static string ToDurationSeo(this int source) => ToDurationSeo((double)source);
+
+        public static string ToDurationSeo(this double source)
+        {
+            var span = TimeSpan.FromSeconds(source);
+
+            var formatted = string.Format("{0}{1}{2}",
+                span.Duration().Hours > 0 ? string.Format("{0:D2}:", span.Hours) : string.Empty,
+                span.Duration().Minutes > 0 ? string.Format("{0:D2}:", span.Minutes) : "00:",
+                span.Duration().Seconds > 0 ? string.Format("{0:D2}", span.Seconds) : "00:");
+
+            if (formatted.EndsWith(":"))
+            {
+                formatted = formatted.Substring(0, formatted.Length - 1);
+            }
+
+            return formatted;
         }
     }
 }

@@ -121,5 +121,13 @@ namespace ExtensionsTest
 
             Assert.True(persianDateTime.ToDateTimeFromPersian() == new DateTime(2019, 01, 21, 10, 46, 0, 0));
         }
-    }
+
+		[Fact]
+		public void ToDurationSeo()
+		{
+			var duration = 466.0;
+			var tt = duration.ToDurationSeo();
+			Assert.True(duration.ToDurationSeo() == "07:46");
+		}
+	}
 }

@@ -166,8 +166,19 @@ namespace Extensions
 
 		public static string ToDurationSeo(this double duration)
 		{
-			var timeValue = TimeSpan.FromSeconds(duration);
-			return string.Format("{0:hh\\:mm\\:ss}", timeValue);
+			var span = TimeSpan.FromSeconds(duration);
+
+			var formatted = string.Format("{0}{1}{2}",
+				span.Duration().Hours > 0 ? string.Format("{0:D2}:", span.Hours) : string.Empty,
+				span.Duration().Minutes > 0 ? string.Format("{0:D2}:", span.Minutes) : "00:",
+				span.Duration().Seconds > 0 ? string.Format("{0:D2}", span.Seconds) : "00:");
+
+			if (formatted.EndsWith(":"))
+			{
+				formatted = formatted.Substring(0, formatted.Length - 2);
+			}
+
+			return formatted;
 		}
 	}
 }

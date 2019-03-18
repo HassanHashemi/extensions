@@ -175,7 +175,7 @@ namespace Extensions
 
 			if (formatted.EndsWith(":"))
 			{
-				formatted = formatted.Substring(0, formatted.Length - 2);
+				formatted = formatted.Substring(0, formatted.Length - 1);
 			}
 
 			return formatted;

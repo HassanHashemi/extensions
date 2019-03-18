@@ -132,6 +132,7 @@ namespace ExtensionsTest
         public void Should_Display_Second()
         {
             Assert.True(30.0.ToDurationSeo() == "00:30");
+            Assert.True(0.ToDurationSeo() == "00:00");
         }
 
         [Fact]

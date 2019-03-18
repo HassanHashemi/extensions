@@ -8,8 +8,8 @@ namespace ExtensionsTest
         [Fact]
         public void ShouldGenerateGuid()
         {
-            var generator1 = new SequentialGuidValueGenerator();
-            var generator2 = new SequentialGuidValueGenerator();
+            var generator1 = new GuidGenerator();
+            var generator2 = new GuidGenerator();
             var first = generator1.Next();
             var second = generator2.Next();
             Assert.True(first != default(Guid));

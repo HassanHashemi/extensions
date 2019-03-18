@@ -8,11 +8,11 @@ namespace System
     ///     GUIDs will provide a performance benefit. The generated values are non-temporary, meaning they will
     ///     be saved to the database.
     /// </summary>
-    public sealed class SequentialGuidValueGenerator
+    public sealed class GuidGenerator
     {
         private long _counter;
 
-        public SequentialGuidValueGenerator()
+        public GuidGenerator()
         {
             _counter = DateTime.UtcNow.Ticks;
         }

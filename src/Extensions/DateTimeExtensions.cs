@@ -208,7 +208,7 @@ namespace Extensions
             return formatted;
         }
 
-        public static string GetTimeAgoString(DateTime first)
+        public static string GetTimeAgoString(this DateTime first)
         {
             return DifferenceString(first, DateTime.Now);
         }

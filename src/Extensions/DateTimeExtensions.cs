@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Extensions
 {
-	public class PersianDateWrapper
+    public class PersianDateWrapper
     {
         public int Year { get; set; }
         public int Month { get; set; }
@@ -15,6 +16,30 @@ namespace Extensions
         public int? Seconds { get; set; }
 
         public string Full => $"{this.Year}/{this.Month}/{this.Day}";
+    }
+
+    public enum DatePostfix
+    {
+        [Description("ثانیه")]
+        Seconds,
+
+        [Description("دقیقه")]
+        Minute,
+
+        [Description("ساعت")]
+        Hours,
+
+        [Description("روز")]
+        Days,
+
+        [Description("هفته")]
+        Week,
+
+        [Description("ماه")]
+        Month,
+
+        [Description("سال")]
+        Year
     }
 
     public static class DateTimeExtensions
@@ -56,7 +81,7 @@ namespace Extensions
         public static string ToFullStringPersianDateTime(this DateTime date)
         {
             var persian = ToPersian(date);
-            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {( date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "" )}";
+            return $"{date.DayOfWeek.GetDayName()} {date.ToPersianDate()} {(date.Hour > 0 || date.Minute > 0 ? " ساعت " + date.ToString("HH:mm") : "")}";
         }
 
         public static string ToFullStringPersianDate(this DateTime date)
@@ -181,6 +206,66 @@ namespace Extensions
             }
 
             return formatted;
+        }
+
+        public static string GetTimeAgoString(DateTime first)
+        {
+            return DifferenceString(first, DateTime.Now);
+        }
+
+        public static string DifferenceString(DateTime first, DateTime second)
+        {
+            (int value, DatePostfix prefix) = Difference(first, second);
+
+            return string.Concat(value, " ", prefix.GetEnumDescription(), " ", "پیش");
+        }
+
+        public static (int value, DatePostfix prefix) Difference(DateTime first, DateTime second)
+        {
+            var prefix = default(DatePostfix);
+            var value = default(int);
+            var diff = second - first;
+
+            if (diff.TotalHours <= 1)
+            {
+                if (diff.TotalMinutes == 0)
+                {
+                    value = (int)diff.TotalSeconds;
+                    prefix = DatePostfix.Seconds;
+                }
+                else
+                {
+                    value = (int)diff.TotalMinutes;
+                    prefix = DatePostfix.Minute;
+                }
+            }
+            else if (diff.TotalDays <= 1)
+            {
+                value = (int)diff.TotalHours;
+                prefix = DatePostfix.Hours;
+            }
+            else if (diff.TotalDays < 7 && diff.TotalDays > 1)
+            {
+                value = (int)diff.TotalDays;
+                prefix = DatePostfix.Days;
+            }
+            else if (diff.TotalDays <= 30 && diff.TotalDays >= 7)
+            {
+                value = (int)diff.TotalDays / 7;
+                prefix = DatePostfix.Week;
+            }
+            else if (diff.TotalDays < 365 && diff.TotalDays >= 30)
+            {
+                value = (int)diff.TotalDays / 30;
+                prefix = DatePostfix.Month;
+            }
+            else
+            {
+                value = (int)diff.TotalDays / 356;
+                prefix = DatePostfix.Year;
+            }
+
+            return (value, prefix);
         }
     }
 }

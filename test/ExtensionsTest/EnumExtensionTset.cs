@@ -31,7 +31,7 @@ namespace ExtensionsTest
         public void Should_Return_AttrValue()
         {
             var attr = TestEnum.Hosein.GetAttributeValue<TestAttribute>();
-
+        
             Assert.True(attr.Value == "Hassan Hsahemi");
 
             Assert.True(TestEnum.Hassan.GetAttributeValue<TestAttribute>() == null);

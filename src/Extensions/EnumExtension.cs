@@ -28,6 +28,16 @@ namespace Extensions
             return (TAttributeType)attributes[0];
         }
 
+        public static TAttr GetAttributeValue<TAttr>(this Enum enumValue) where TAttr : Attribute
+        { 
+            var fi = enumValue.GetType().GetField(enumValue.ToString());
+            var attributes = (TAttr[])fi.GetCustomAttributes(
+                    typeof(TAttr),
+                    false);
+
+            return attributes.FirstOrDefault();
+        }
+
         public static string GetEnumDescription(this Enum enumValue)
         {
             var fi = enumValue.GetType().GetField(enumValue.ToString());

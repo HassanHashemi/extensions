@@ -142,7 +142,29 @@ namespace Tebyan.Extensions.Cryphtography
             return cipherText;
         }
 
-        private static string ToBase64String(byte[] input) => Convert.ToBase64String(input);
-        private static byte[] FromBase64String(string base64) => Convert.FromBase64String(base64);
+        static readonly char[] padding = { '=' };
+
+        public static string ToBase64String(byte[] input)
+        {
+            return Convert.ToBase64String(input)
+                .TrimEnd(padding)
+                .Replace('+', '-')
+                .Replace('/', '_');
+        }
+
+        public static byte[] FromBase64String(string base64)
+        {
+            var incoming = base64
+                .Replace('_', '/')
+                .Replace('-', '+');
+
+            switch (base64.Length % 4)
+            {
+                case 2: incoming += "=="; break;
+                case 3: incoming += "="; break;
+            }
+
+            return Convert.FromBase64String(incoming);
+        }
     }
 }

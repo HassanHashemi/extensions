@@ -15,7 +15,7 @@ namespace ExtensionsTest
             var encrypted = aes.Encrypt(person);
             var result = aes.Decrypt(encrypted);
 
-            Assert.True(person == result);
+            Assert.True(person == result); 
         }
     }
 }

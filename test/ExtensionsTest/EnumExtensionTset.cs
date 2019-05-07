@@ -1,25 +1,18 @@
 using Extensions;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using Xunit;
 
 namespace ExtensionsTest
 {
-    public class EnumExtensionTset
+    public partial class EnumExtensionTset
     {
-        enum testEnum
-        {
-            [DescriptionAttribute("my name")]
-            Mahdi = 0,
-            [DescriptionAttribute("Hashemi's name")]
-            Hassan = 1,
-            Hosein = 2
-        }
 
         [Fact]
         public void ShouidPass_GetItems_ValidInput()
         {
-            var value = EnumExtensions.GetItems<testEnum>();
+            var value = EnumExtensions.GetItems<TestEnum>();
             var selected = value.Where(x => x.Value == 1).FirstOrDefault();
 
             Assert.True(selected.Description == "Hashemi's name");
@@ -29,10 +22,19 @@ namespace ExtensionsTest
         [Fact]
         public void ShouidPass_GetEnumAttribute_ValidInput()
         {
-            var value = typeof(testEnum).GetEnumAttribute<DescriptionAttribute>("Mahdi");
+            var value = typeof(TestEnum).GetEnumAttribute<DescriptionAttribute>("Mahdi");
 
             Assert.True(value.Description == "my name");
         }
 
+        [Fact]
+        public void Should_Return_AttrValue()
+        {
+            var attr = TestEnum.Hosein.GetAttributeValue<TestAttribute>();
+        
+            Assert.True(attr.Value == "Hassan Hsahemi");
+
+            Assert.True(TestEnum.Hassan.GetAttributeValue<TestAttribute>() == null);
+        }
     }
 }

@@ -13,6 +13,19 @@ namespace Extensions
 {
     public static class StringExtensions
     {
+        const string WINDOWS_DIR_SEPARATOR = @"\";
+        const string LINUX_DIR_SEPARATOR = @"/";
+
+        public static string ReplaceLinuxCharacter(string windowsPath)
+        {
+            return windowsPath.Replace(LINUX_DIR_SEPARATOR, WINDOWS_DIR_SEPARATOR);
+        }
+
+        public static string ReplaceWindowsCharacter(string windowsPath)
+        {
+            return windowsPath.Replace(WINDOWS_DIR_SEPARATOR, LINUX_DIR_SEPARATOR);
+        }
+
         /// <summary>
         /// set valid title for use in url that use '-' instead od spaceing  
         /// </summary>

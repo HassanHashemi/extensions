@@ -144,6 +144,8 @@ namespace Tebyan.Extensions.Cryphtography
 
         static readonly char[] padding = { '=' };
 
+        //https://stackoverflow.com/questions/26353710/how-to-achieve-base64-url-safe-encoding-in-c
+
         public static string ToBase64String(byte[] input)
         {
             return Convert.ToBase64String(input)

@@ -43,5 +43,7 @@ namespace System
 
             return new Guid(guidBytes);
         }
+
+        public static Guid NewGuid() => new GuidGenerator().Next();
     }
 }

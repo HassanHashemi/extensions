@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions.Sliding", "src\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions.GraphicUtils", "src\Extensions.GraphicUtils\Extensions.GraphicUtils.csproj", "{8546FFF0-704F-497A-B128-3D8C35A82257}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Http", "src\Extensions.Http\Extensions.Http.csproj", "{E1CEF8C3-0F60-49F7-9E9D-C021793510B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{8546FFF0-704F-497A-B128-3D8C35A82257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8546FFF0-704F-497A-B128-3D8C35A82257}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8546FFF0-704F-497A-B128-3D8C35A82257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1CEF8C3-0F60-49F7-9E9D-C021793510B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1CEF8C3-0F60-49F7-9E9D-C021793510B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1CEF8C3-0F60-49F7-9E9D-C021793510B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1CEF8C3-0F60-49F7-9E9D-C021793510B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{44AEEE8B-3FB4-498B-8C86-EE05FDA198AC} = {E9F1AE0F-F66D-4D9E-846A-65604996A1BC}
 		{CAB3984D-476D-49E5-A164-1398B725E436} = {F4BE75B4-DE29-4738-8418-616185C07AF6}
 		{8546FFF0-704F-497A-B128-3D8C35A82257} = {F4BE75B4-DE29-4738-8418-616185C07AF6}
+		{E1CEF8C3-0F60-49F7-9E9D-C021793510B1} = {F4BE75B4-DE29-4738-8418-616185C07AF6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11B04678-9BA9-4D56-AAF2-834DCAA2B71C}

@@ -6,7 +6,7 @@ namespace Extensions.Http.Mvc
 {
     public abstract class BaseController : Controller
     {
-        public IActionResult ApiOk(object data)
+        protected IActionResult ApiOk(object data)
         {
             if (data.GetType().IsPrimitive || data is string)
             {
@@ -16,13 +16,13 @@ namespace Extensions.Http.Mvc
             return new ApiResult(HttpStatusCode.OK, data);
         }
 
-        public IActionResult BadRequestInternal(string error)
+        protected IActionResult BadRequestInternal(string error)
         {
             var errorEntry = new ApiErrorEntry("message", new[] { error });
             return BadRequestInternal(errorEntry);
         }
 
-        public IActionResult BadRequestInternal(params ApiErrorEntry[] errors)
+        protected IActionResult BadRequestInternal(params ApiErrorEntry[] errors)
         {
             return new ApiResult(HttpStatusCode.BadRequest, errors);
         }

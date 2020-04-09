@@ -12,16 +12,16 @@ namespace Extensions.Http.Mvc
         {
             Guard.NotNull(errors, nameof(errors));
 
-            this.Code = statusCode;
-            this.Errors = errors;
+            Code = statusCode;
+            Errors = errors;
         }
 
         public ApiResult(HttpStatusCode code, object data)
         {
             Guard.NotNull(data, nameof(data));
 
-            this.Code = code;
-            this.Data = data;
+            Code = code;
+            Data = data;
         }
 
         public HttpStatusCode Code { get; }
@@ -32,25 +32,25 @@ namespace Extensions.Http.Mvc
         {
             SetStatusCode(context);
 
-            this.CreateResult().ExecuteResult(context);
+            CreateResult().ExecuteResult(context);
         }
 
         public override Task ExecuteResultAsync(ActionContext context)
         {
             SetStatusCode(context);
 
-            return this.CreateResult().ExecuteResultAsync(context);
+            return CreateResult().ExecuteResultAsync(context);
         }
 
         private ObjectResult CreateResult()
         {
-            if (IsSuccess(this.Code))
+            if (IsSuccess(Code))
             {
-                return new ObjectResult(Envelop.Success(this.Code, this.Data));
+                return new ObjectResult(Envelop.Success(Code, Data));
             }
             else
             {
-                return new ObjectResult(Envelop.HandledError(this.Code, this.Errors));
+                return new ObjectResult(Envelop.HandledError(Code, Errors));
             }
 
             static bool IsSuccess(HttpStatusCode statusCode) => ((int)statusCode >= 200) && ((int)statusCode <= 299);
@@ -58,7 +58,7 @@ namespace Extensions.Http.Mvc
 
         private void SetStatusCode(ActionContext context)
         {
-            context.HttpContext.Response.StatusCode = (int)this.Code;
+            context.HttpContext.Response.StatusCode = (int)Code;
         }
     }
 }

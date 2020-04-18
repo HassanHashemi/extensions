@@ -89,6 +89,7 @@ namespace Extensions
             var persian = ToPersian(date);
             return $"{date.DayOfWeek.GetDayName()} {persian.Day} {GetMonthName(persian.Month)} {persian.Year}";
         }
+
         public static string GetDayName(this DayOfWeek day)
         {
             if (day == DayOfWeek.Friday)

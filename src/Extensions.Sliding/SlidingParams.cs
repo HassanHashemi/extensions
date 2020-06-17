@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tebyan.Business.Extensions
+namespace Extensions.Sliding
 {
     public class SlidingParams
     {

@@ -13,8 +13,18 @@ namespace Extensions
 {
     public static class StringExtensions
     {
-        const string WINDOWS_DIR_SEPARATOR = @"\";
-        const string LINUX_DIR_SEPARATOR = @"/";
+        public const string WINDOWS_DIR_SEPARATOR = @"\";
+        public const string LINUX_DIR_SEPARATOR = "/";
+
+        public static bool IsASCII(this string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return true;
+            }
+
+            return source.All(c => c < 128);
+        }
 
         public static string ReplaceLinuxCharacter(string windowsPath)
         {

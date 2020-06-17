@@ -8,7 +8,7 @@ namespace Extensions
     {
         private static readonly TimeSpan _defaultTimeOut = TimeSpan.FromMilliseconds(300);
 
-        private static readonly Dictionary<string, string> ReplacementMap = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> _replacementMap = new Dictionary<string, string>()
         {
             { "[آأإ]", "ا" },
             { "[ي]", "ی" },
@@ -24,9 +24,9 @@ namespace Extensions
 
         public static string ReplaceArabicCharacters(this string source)
         {
-            foreach (var arabicPattern in ReplacementMap.Keys)
+            foreach (var arabicPattern in _replacementMap.Keys)
             {
-                source = Replace(source, arabicPattern, ReplacementMap[arabicPattern]);
+                source = Replace(source, arabicPattern, _replacementMap[arabicPattern]);
             }
 
             return source.ToLower();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 
-namespace Tebyan.Business.Extensions
+namespace Extensions.Sliding
 {
     public class SlidingCollection<T> : IEnumerable<T> where T : class
     {
@@ -14,28 +14,41 @@ namespace Tebyan.Business.Extensions
         private IQueryable<T> _collection;
         private bool _collectionInitialized = false;
         private int _count = 0;
+        private List<T> _result;
 
         public SlidingCollection(IQueryable<T> collection) : this(collection, null) { }
 
         public SlidingCollection(IQueryable<T> collection, SlidingParams slidingParams)
         {
-            this._collection = collection ?? throw new ArgumentNullException(nameof(collection));
-            this._slidingParams = slidingParams ?? SlidingParams.Default;
+            _collection = collection ?? throw new ArgumentNullException(nameof(collection));
+            _slidingParams = slidingParams ?? SlidingParams.Default;
         }
 
         public async Task<SlidingCollection<T>> InitializeAsync()
-            => (await this.SetCountAsync()).SortAndSkip();
+        {
+            await SetCountAsync();
+            SortAndSkip();
+            _result = await _collection.ToListAsync();
+
+            return this;
+        }
 
         public SlidingCollection<T> Initialize()
-            => this.SetCount().SortAndSkip();
+        {
+            SetCount();
+            SortAndSkip();
+            _result = _collection.ToList();
+
+            return this;
+        }
 
         private SlidingCollection<T> SortAndSkip()
         {
-            this._collection = this.Sort()
-                    .Skip(this._slidingParams.Skip)
-                    .Take(this._slidingParams.Take);
+            _collection = Sort()
+                    .Skip(_slidingParams.Skip)
+                    .Take(_slidingParams.Take);
 
-            this._collectionInitialized = true;
+            _collectionInitialized = true;
 
             return this;
         }
@@ -44,65 +57,55 @@ namespace Tebyan.Business.Extensions
         {
             get
             {
-                this.ThrowIfNotInit();
+                ThrowIfNotInit();
 
                 return _count;
             }
             set
             {
-                this._count = value;
-            }
-        }
-
-        public IQueryable<T> Collection
-        {
-            get
-            {
-                ThrowIfNotInit();
-
-                return this._collection;
+                _count = value;
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            this.ThrowIfNotInit();
-            return this._collection.GetEnumerator();
+            ThrowIfNotInit();
+            return _result.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            this.ThrowIfNotInit();
-            return this.GetEnumerator();
+            ThrowIfNotInit();
+            return GetEnumerator();
         }
 
         private IQueryable<T> Sort()
         {
             var sortExpression = string.Empty;
 
-            foreach(var kvp in this._slidingParams.SortProperties)
+            foreach(var kvp in _slidingParams.SortProperties)
             {
                 sortExpression += sortExpression += $"{kvp.Key} {kvp.Value.ToString().ToLower()},";
             }
 
-            return this._collection.OrderBy(sortExpression.TrimEnd(','));
+            return _collection.OrderBy(sortExpression.TrimEnd(','));
         }
 
         private SlidingCollection<T> SetCount()
         {
-            this.Count = this._collection.Count();
+            Count = _collection.Count();
             return this;
         }
 
         private async Task<SlidingCollection<T>> SetCountAsync()
         {
-            this.Count = await this._collection.CountAsync();
+            Count = await _collection.CountAsync();
             return this;
         }
 
         private void ThrowIfNotInit()
         {
-            if (!this._collectionInitialized)
+            if (!_collectionInitialized)
             {
                 throw new InvalidOperationException("Collection has not been initialized");
             }

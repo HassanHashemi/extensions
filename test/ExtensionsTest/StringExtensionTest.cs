@@ -7,6 +7,13 @@ namespace ExtensionsTest
     public class StringExtensionTest
     {
         [Theory]
+        [InlineData("1 апреля")]
+        public void ShouldPass_ForNoneASCII(string input)
+        {
+            Assert.True(!input.IsASCII());
+        }
+
+        [Theory]
         [InlineData( "سلام !# بر همه <شما دوستان>")]
         public void ShouldPass_ToUrlTitle(string url)
         {

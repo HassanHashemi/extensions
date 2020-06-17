@@ -1,4 +1,4 @@
-﻿namespace Tebyan.Business.Extensions
+﻿namespace Extensions.Sliding
 {
     public enum OrderType
     {

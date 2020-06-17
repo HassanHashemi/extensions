@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Tebyan.Business.Extensions
+namespace Extensions.Sliding
 {
     public static class SlidingCollectionExtensions
     {
@@ -14,12 +15,21 @@ namespace Tebyan.Business.Extensions
         }
 
         public static SlidingCollectionWrapper<T> ToSlidingCollectionWrapper<T>(this IQueryable<T> source, SlidingParams slidingParams)
-            where T : class => new SlidingCollectionWrapper<T>(source.ToSlidingCollection(slidingParams));
+            where T : class
+        {
+            return new SlidingCollectionWrapper<T>(source.ToSlidingCollection(slidingParams));
+        }
 
         public static Task<SlidingCollection<T>> ToSlidingCollectionAsync<T>(this IQueryable<T> source, SlidingParams slidingParams)
-            where T : class => new SlidingCollection<T>(source, slidingParams).InitializeAsync();
+            where T : class
+        {
+            return new SlidingCollection<T>(source, slidingParams).InitializeAsync();
+        }
 
         public static SlidingCollection<T> ToSlidingCollection<T>(this IQueryable<T> source, SlidingParams slidingParams)
-            where T : class => new SlidingCollection<T>(source, slidingParams).Initialize();
+            where T : class
+        {
+            return new SlidingCollection<T>(source, slidingParams).Initialize();
+        }
     }
 }

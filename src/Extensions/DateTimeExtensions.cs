@@ -223,9 +223,10 @@ namespace Extensions
 
         public static (int value, DatePostfix prefix) Difference(DateTime first, DateTime second)
         {
-            var prefix = default(DatePostfix);
-            var value = default(int);
             var diff = second - first;
+
+            DatePostfix prefix;
+            int value;
 
             if (diff.TotalHours <= 1)
             {

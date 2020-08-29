@@ -7,6 +7,11 @@ namespace Extensions
 {
     public static class HashtagUtility
     {
+        public static string ReplaceHashtag(string input, Func<string, string> evlauator)
+        {
+            return Regex.Replace(input, @"\b?\#\w*\b", match => evlauator(match.Value));
+        }
+
         public static IEnumerable<string> TagExteraction(string input)
         {
             var timeout = new TimeSpan(0, 0, 0, 0, 100);

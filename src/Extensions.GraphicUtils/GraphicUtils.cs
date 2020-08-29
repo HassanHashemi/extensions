@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Extensions.GraphicUtils
 {
-    public class GraphicUtils
+    public static class GraphicUtils
     {
         /// <summary>
         /// Get size of image from byte array image .
@@ -21,10 +21,9 @@ namespace Extensions.GraphicUtils
         public static Size GetImageSizeFromByteArray(byte[] binaryImage)
         {
             var stream = new MemoryStream(binaryImage);
-            using (var image = Image.Load<Argb32>(stream))
-            {
-                return image.Size();
-            }
+            using var image = Image.Load<Argb32>(stream);
+
+            return image.Size();
         }
 
         /// <summary>
@@ -68,8 +67,11 @@ namespace Extensions.GraphicUtils
             var thumbStream = new MemoryStream();
             using (var image = Image.Load<Argb32>(inputStream))
             {
-                var encoder = new JpegEncoder();
-                encoder.Quality = quality;
+                var encoder = new JpegEncoder
+                {
+                    Quality = quality
+                };
+
                 image.SaveAsJpeg(thumbStream, encoder);
             }
 
@@ -87,22 +89,19 @@ namespace Extensions.GraphicUtils
         /// <remarks>Passing zero for one of height or width within the resize options will automatically preserve the aspect ratio of the original image or the nearest possible ratio.</remarks>
         public static void Resize(Stream inputStream, Stream outputStream, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool isGrayscale = false)
         {
-            using (var image = Image.Load<Argb32>(inputStream))
+            using var image = Image.Load<Argb32>(inputStream);
+
+            if (isGrayscale)
             {
-                if (isGrayscale)
-                {
-                    image.Mutate(ctx => ctx
-                                        .Resize(options)
-                                        .Grayscale());
-                }
-                else
-                {
-                    image.Mutate(ctx => ctx
-                                        .Resize(options));
-                }
-                var fileStream = outputStream as FileStream;
-                image.Save(outputStream, GetFormat(format, Path.GetExtension(fileStream.Name)));
+                image.Mutate(ctx => ctx.Resize(options).Grayscale());
             }
+            else
+            {
+                image.Mutate(ctx => ctx.Resize(options));
+            }
+
+            var fileStream = outputStream as FileStream;
+            image.Save(outputStream, GetFormat(format, Path.GetExtension(fileStream.Name)));
         }
 
         /// <summary>
@@ -116,14 +115,12 @@ namespace Extensions.GraphicUtils
         /// <remarks>Passing zero for one of height or width within the resize options will automatically preserve the aspect ratio of the original image or the nearest possible ratio.</remarks>
         public static async Task Resize(string inputPath, string outputPath, ResizeOptions options, ImageFormats format = ImageFormats.UnKnown, bool isGrayscale = false)
         {
-            Guard.NotNullOrEmpty(inputPath, nameof(inputPath));
-            Guard.NotNullOrEmpty(outputPath, nameof(outputPath));
-
-            byte[] inputStream;
+            //byte[] inputStream;
             using (var sourceStream = File.Open(inputPath, FileMode.Open))
             {
-                inputStream = new byte[sourceStream.Length];
+                var inputStream = new byte[sourceStream.Length];
                 await sourceStream.ReadAsync(inputStream, 0, (int)sourceStream.Length);
+
                 using (var outStream = new FileStream(outputPath, FileMode.Create))
                 {
                     Resize(new MemoryStream(inputStream), outStream, options, format, isGrayscale);
@@ -143,11 +140,6 @@ namespace Extensions.GraphicUtils
         /// <returns>Return is Void , It Save Image In Physical Output path</returns>
         public static Task Resize(string inputPath, string outputPath, int targetWidth, int targetHeight, ImageFormats format = ImageFormats.UnKnown)
         {
-            Guard.NotNullOrEmpty(inputPath, nameof(inputPath));
-            Guard.NotNullOrEmpty(outputPath, nameof(outputPath));
-            Guard.Positive(targetWidth, nameof(targetWidth));
-            Guard.Positive(targetHeight, nameof(targetHeight));
-
             var options = new ResizeOptions
             {
                 Size = new Size(targetWidth, targetHeight),
@@ -187,7 +179,6 @@ namespace Extensions.GraphicUtils
                         return new PngEncoder();
                     case ImageFormats.Gif:
                         return new GifEncoder();
-
                     default:
                         throw new NotSupportedException();
                 }

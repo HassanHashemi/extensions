@@ -112,6 +112,7 @@ namespace Extensions.GraphicUtils
                     VerticalAlignment = VerticalAlignment.Center,
                     WrapTextWidth = targetWidth
                 };
+
                 img.Mutate(i => i.DrawText(textGraphicOptions, text, scaledFont, color, center));
             });
         }

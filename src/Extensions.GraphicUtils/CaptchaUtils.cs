@@ -13,8 +13,6 @@ namespace Extensions.GraphicUtils
     {
         public static string GenerateCaptchaBase64Image(string code)
         {
-            Guard.NotNullOrEmpty(code, nameof(code));
-
             var positions = new List<byte> { 15, 7, 16, 23, 13 };
             positions = ShuffleList(positions);
 
@@ -40,12 +38,12 @@ namespace Extensions.GraphicUtils
 
         private static List<E> ShuffleList<E>(List<E> inputList)
         {
-            List<E> randomList = new List<E>();
-            Random r = new Random();
-            int randomIndex = 0;
+            var randomList = new List<E>();
+            var r = new Random();
+
             while (inputList.Count > 0)
             {
-                randomIndex = r.Next(0, inputList.Count); //Choose a random object in the list
+                int randomIndex = r.Next(0, inputList.Count);
                 randomList.Add(inputList[randomIndex]); //add it to the new, random list
                 inputList.RemoveAt(randomIndex); //remove to avoid duplicates
             }

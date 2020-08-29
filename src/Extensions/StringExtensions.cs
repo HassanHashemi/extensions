@@ -266,53 +266,15 @@ namespace Extensions
             return value.Substring(value.Length - length);
         }
 
-        public static int[] ToIntArray(this string content)
-        {
-            var array = new List<int>();
-            if (!string.IsNullOrEmpty(content))
-            {
-                string[] ints = content.Split(new char[] { ',' });
-                foreach (string i in ints)
-                {
-                    try
-                    {
-                        array.Add(Convert.ToInt32(i));
-                    }
-                    catch
-                    {
-                        throw new FormatException();
-                    }
-                }
-                return array.ToArray();
-            }
-            throw new ArgumentNullException();
-        }
-
-        public static string[] ToStringArray(this string content)
-        {
-            throw new NotImplementedException();
-            //var arr = new string[] { };
-            //if (!string.IsNullOrEmpty(content))
-            //{
-            //    arr = content.Split(new char[] { ',' }).ToArray();
-            //    return arr;
-            //}
-            //throw new ArgumentNullException();
-        }
-
         public static string StripHtmlTags(this string html)
         {
-            throw new NotImplementedException();
-            //if (string.IsNullOrEmpty(html))
-            //{
-            //    return html;
-            //}
-            //else
-            //{
-            //    return Regex.Replace(html, "<(.|\n)*?>", string.Empty).Replace("<", string.Empty);
-            //}
-        }
+            if (string.IsNullOrEmpty(html))
+            {
+                return html;
+            }
 
+            return Regex.Replace(html, "<.*?>", string.Empty);
+        }
 
         public static string RemoveSpecialCharacters(this string content, string replaceBy)
         {

@@ -80,20 +80,6 @@ namespace ExtensionsTest
         }
 
         [Theory]
-        [InlineData("salam")]
-        public void ShouldThrow_FormatException_ToIntArray(string word)
-        {
-            Assert.Throws<FormatException>(() => word.ToIntArray());
-        }
-
-        [Theory]
-        [InlineData("12,13")]
-        public void ShouldPass_ToIntArray(string word)
-        {
-            Assert.True(word.ToIntArray()[0] == 12);
-        }
-
-        [Theory]
         [InlineData("~6s&^dg+=")]
         public void ShouldPass_UrlGuidEncode(string word)
         {

@@ -4,7 +4,7 @@
     {
         public PaginationInfo(int total)
         {
-            this.Total = total;
+            Total = total;
         }
 
         public int Total { get; }

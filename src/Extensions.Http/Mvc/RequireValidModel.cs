@@ -19,7 +19,8 @@ namespace Portal.Web.Infra.Filters
             {
                 var data = context.ModelState
                     .Where(i => i.Value.ValidationState != ModelValidationState.Valid)
-                    .Select(ApiErrorEntry.Format);
+                    .Select(ApiErrorEntry.Format)
+                    .ToArray();
 
                 context.Result = new ApiResult(HttpStatusCode.BadRequest, data);
             }

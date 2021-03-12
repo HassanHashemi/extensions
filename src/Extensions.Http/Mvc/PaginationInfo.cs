@@ -2,6 +2,10 @@
 {
     public class PaginationInfo
     {
+        public PaginationInfo()
+        {
+        }
+
         public PaginationInfo(int total)
         {
             Total = total;

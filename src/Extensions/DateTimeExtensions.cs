@@ -44,6 +44,11 @@ namespace Extensions
 
     public static class DateTimeExtensions
     {
+        public static DateTime ToDateFromPersianWrapper(this PersianDateWrapper source)
+        {
+            return new DateTime(source.Year, source.Month, source.Day, new PersianCalendar());
+        }
+
         public static PersianDateWrapper ToPersian(this DateTime source)
         {
             var calendar = new PersianCalendar();

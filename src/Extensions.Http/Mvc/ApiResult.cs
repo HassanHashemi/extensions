@@ -53,7 +53,7 @@ namespace Extensions.Http.Mvc
         {
             if (IsSuccess(Code))
             {
-                return new ObjectResult(Envelop<object>.Success(Code, Data));
+                return new ObjectResult(Envelop<object>.Success(Code, Data, PaginationInfo));
             }
             else
             {

@@ -8,6 +8,12 @@ namespace Extensions.Http.Mvc
 {
     public sealed class ApiResult : ActionResult
     {
+        public ApiResult(HttpStatusCode statusCode, object data, PaginationInfo paginationInfo = null)
+            : this(statusCode, data)
+        {
+            PaginationInfo = paginationInfo;
+        }
+
         public ApiResult(HttpStatusCode statusCode, params ApiErrorEntry[] errors)
         {
             Guard.NotNull(errors, nameof(errors));
@@ -26,6 +32,7 @@ namespace Extensions.Http.Mvc
 
         public HttpStatusCode Code { get; }
         public IEnumerable<ApiErrorEntry> Errors { get; }
+        public PaginationInfo PaginationInfo { get; }
         public object Data { get; }
 
         public override void ExecuteResult(ActionContext context)

@@ -6,14 +6,14 @@ namespace Extensions.Http.Mvc
 {
     public abstract class BaseController : Controller
     {
-        protected IActionResult ApiOk(object data)
+        protected IActionResult ApiOk(object data, PaginationInfo paginationInfo = null)
         {
             if (data.GetType().IsPrimitive || data is string)
             {
                 throw new ArgumentException("Primitive types are not supported");
             }
 
-            return new ApiResult(HttpStatusCode.OK, data);
+            return new ApiResult(HttpStatusCode.OK, data, paginationInfo);
         }
 
         protected IActionResult BadRequestInternal(string error)

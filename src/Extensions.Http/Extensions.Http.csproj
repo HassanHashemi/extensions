@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="ArgsValidation" Version="0.0.1" />
+    <PackageReference Include="DDDHelpers" Version="1.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
   </ItemGroup>
 

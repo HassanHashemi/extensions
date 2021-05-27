@@ -30,6 +30,14 @@ namespace Extensions.Http.Mvc
             Data = data;
         }
 
+        public ApiResult(HttpStatusCode code, string errorMessage)
+        {
+            Guard.NotNullOrEmpty(errorMessage, nameof(errorMessage));
+
+            Code = code;
+            Data = errorMessage;
+        }
+
         public HttpStatusCode Code { get; }
         public IEnumerable<ApiErrorEntry> Errors { get; }
         public PaginationInfo PaginationInfo { get; }
@@ -57,7 +65,7 @@ namespace Extensions.Http.Mvc
             }
             else
             {
-                return new ObjectResult(Envelop.HandledError(Code, Errors));
+                return new ObjectResult(Envelop.HandledError(Code, Errors, Data as string));
             }
 
             static bool IsSuccess(HttpStatusCode statusCode) => ((int)statusCode >= 200) && ((int)statusCode <= 299);

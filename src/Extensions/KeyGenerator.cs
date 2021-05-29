@@ -6,7 +6,7 @@ namespace Extensions
 {
     public static class KeyGenerator
     {
-        private static char[] _chars =
+        private static readonly char[] _chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_".ToCharArray();
 
         /// <summary>

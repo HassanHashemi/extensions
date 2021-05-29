@@ -1,47 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Extensions
 {
-    public class PersianDateWrapper
-    {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
-        public int? Hours { get; set; }
-        public int? Minutes { get; set; }
-        public int? Seconds { get; set; }
-
-        public string Full => $"{this.Year}/{this.Month}/{this.Day}";
-    }
-
-    public enum DatePostfix
-    {
-        [Description("ثانیه")]
-        Seconds,
-
-        [Description("دقیقه")]
-        Minute,
-
-        [Description("ساعت")]
-        Hours,
-
-        [Description("روز")]
-        Days,
-
-        [Description("هفته")]
-        Week,
-
-        [Description("ماه")]
-        Month,
-
-        [Description("سال")]
-        Year
-    }
-
     public static class DateTimeExtensions
     {
         public static DateTime ToDateFromPersianWrapper(this PersianDateWrapper source)

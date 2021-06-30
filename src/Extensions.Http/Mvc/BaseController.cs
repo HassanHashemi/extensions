@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Extensions.Sliding;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 
@@ -25,6 +26,11 @@ namespace Extensions.Http.Mvc
         protected IActionResult BadRequestInternal(params ApiErrorEntry[] errors)
         {
             return new ApiResult(HttpStatusCode.BadRequest, errors);
+        }
+
+        protected IActionResult ApiOk<T>(SlidingCollectionWrapper<T> data) where T : class
+        {
+            return new ApiResult(HttpStatusCode.OK, data.Items, new PaginationInfo(data.Total));
         }
     }
 }

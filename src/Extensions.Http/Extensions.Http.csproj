@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    
     <ProjectReference Include="..\Extensions.Sliding\Extensions.Sliding.csproj" />
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
   </ItemGroup>

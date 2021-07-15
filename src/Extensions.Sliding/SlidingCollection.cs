@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 
 namespace Extensions.Sliding
 {
@@ -28,7 +30,15 @@ namespace Extensions.Sliding
         {
             await SetCountAsync();
             SortAndSkip();
-            _result = await _collection.ToListAsync();
+
+            if (_collection is IMongoQueryable<T> mongoQueryable)
+            {
+                _result = await IAsyncCursorSourceExtensions.ToListAsync(mongoQueryable);
+            }
+            else
+            {
+                _result = await EntityFrameworkQueryableExtensions.ToListAsync(_collection);
+            }
 
             return this;
         }
@@ -83,7 +93,7 @@ namespace Extensions.Sliding
         {
             var sortExpression = string.Empty;
 
-            foreach(var kvp in _slidingParams.SortProperties)
+            foreach (var kvp in _slidingParams.SortProperties)
             {
                 sortExpression += sortExpression += $"{kvp.Key} {kvp.Value.ToString().ToLower()},";
             }
@@ -99,7 +109,15 @@ namespace Extensions.Sliding
 
         private async Task<SlidingCollection<T>> SetCountAsync()
         {
-            Count = await _collection.CountAsync();
+            if (_collection is IMongoQueryable<T> mongoQueryable)
+            {
+                Count = await mongoQueryable.CountAsync();
+            }
+            else
+            {
+                Count = await EntityFrameworkQueryableExtensions.CountAsync(_collection);
+            }
+
             return this;
         }
 

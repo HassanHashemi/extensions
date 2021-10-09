@@ -17,6 +17,17 @@ namespace Extensions.Http.Mvc.Filters
                 context.Result = new ApiResult(HttpStatusCode.NotFound, notFound.Message);
                 context.ExceptionHandled = true;
             }
+
+            if (exception is DomainValidationException validationError)
+            {
+                context.Result = new ApiResult(HttpStatusCode.BadRequest,
+                    new[]
+                    {
+                        new ApiErrorEntry(validationError.PropertyName ?? "system", new [] { validationError.Message })
+                    });
+
+                context.ExceptionHandled = true;
+            }
         }
     }
 }

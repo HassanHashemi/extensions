@@ -7,6 +7,14 @@ namespace Extensions
 {
     public static class DateTimeExtensions
     {
+        public static DateTime EpochToDateTime(this long epoch)
+        {
+            // Java timestamp is milliseconds past epoch
+            var dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddMilliseconds(epoch);
+            return dateTime;
+        }
+
         public static DateTime ToDateFromPersianWrapper(this PersianDateWrapper source)
         {
             return new DateTime(source.Year, source.Month, source.Day, new PersianCalendar());

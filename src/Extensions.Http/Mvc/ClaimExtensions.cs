@@ -8,11 +8,11 @@ namespace Extensions.Http.Mvc
     {
         public static Guid GetId(this ClaimsPrincipal principal)
         {
-            var id = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var id = principal.Claims.FirstOrDefault(c => c.Type == "sub");
 
             if (id == null)
             {
-                throw new Exception($"id claim not found, type is {ClaimTypes.NameIdentifier}");
+                throw new Exception($"id claim not found, type is sub");
             }
 
             return Guid.Parse(id.Value);

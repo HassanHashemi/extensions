@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Extensions.Sliding
 {
@@ -10,7 +11,13 @@ namespace Extensions.Sliding
             this.Total = slidingCollection.Count;
         }
 
-        public SlidingCollection<T> Items { get; }
+        public SlidingCollectionWrapper(IEnumerable<T> items, int total)
+        {
+            Items = items;
+            Total = total;
+        }
+
+        public IEnumerable<T> Items { get; }
         public int Total { get; }
     }
 }

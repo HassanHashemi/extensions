@@ -5,9 +5,15 @@ using Xunit;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Extensions.Sliding;
 
 namespace ExtensionsTest
 {
+    class Test
+    {
+
+    }
+
     public class ChecksumTest
     {
         [Fact]

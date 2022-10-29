@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Extensions.Sliding
 {
@@ -19,5 +20,10 @@ namespace Extensions.Sliding
 
         public IEnumerable<T> Items { get; }
         public int Total { get; }
+
+        public static SlidingCollectionWrapper<T> Empty()
+        {
+            return new SlidingCollectionWrapper<T>(Enumerable.Empty<T>(), 0);
+        }
     }
 }

@@ -46,8 +46,6 @@ namespace Extensions.Http.Mvc.Filters
                     {
                         new ApiErrorEntry("system", new [] { message })
                     });
-
-                context.ExceptionHandled = true;
             }
         }
     }

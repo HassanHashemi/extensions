@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Extensions.Http.Mvc
 {
@@ -14,5 +16,18 @@ namespace Extensions.Http.Mvc
                     .HttpContext
                     .User
                     .GetId();
+
+        public async Task<string> GetTokenAsync()
+        {
+            return await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        }
+
+        public string GetByClaimType(string claimType)
+        {
+            return _httpContextAccessor
+                    .HttpContext
+                    .User
+                    .GetByClaimType(claimType);
+        }
     }
 }

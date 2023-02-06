@@ -20,8 +20,12 @@ namespace Extensions.Http.Mvc
 
         public static string GetByClaimType(this ClaimsPrincipal principal, string claimType)
         {
-            var claim = principal.Claims.FirstOrDefault(c => c.Type == claimType);
+            if (string.IsNullOrEmpty(claimType))
+            {
+                throw new ArgumentNullException(nameof(claimType));
+            }
 
+            var claim = principal.Claims.FirstOrDefault(c => c.Type == claimType);
             if (claim == null)
             {
                 throw new Exception($"{claimType} claim not found, type is sub");

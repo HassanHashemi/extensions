@@ -17,9 +17,9 @@ namespace Extensions.Http.Mvc
                     .User
                     .GetId();
 
-        public async Task<string> GetTokenAsync()
+        public Task<string> GetTokenAsync()
         {
-            return await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+            return _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
         }
 
         public string GetByClaimType(string claimType)

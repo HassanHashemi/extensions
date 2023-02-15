@@ -3,8 +3,6 @@ using Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver.Core.WireProtocol.Messages;
-using System;
 using System.Net;
 
 namespace Extensions.Http.Mvc.Filters

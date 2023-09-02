@@ -24,8 +24,6 @@ namespace Extensions.Http.Mvc
 
         public ApiResult(HttpStatusCode code, object data)
         {
-            Guard.NotNull(data, nameof(data));
-
             Code = code;
             Data = data;
         }

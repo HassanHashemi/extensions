@@ -1,11 +1,22 @@
-﻿using Domain;
+using Domain;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace Extensions.Http.Mvc.Filters
 {
     public class ExceptionHandlerFilter : IExceptionFilter
     {
+        private readonly IHostingEnvironment _environment;
+        private readonly ILogger<ExceptionHandlerFilter> _logger;
+
+        public ExceptionHandlerFilter(IHostingEnvironment environment, ILogger<ExceptionHandlerFilter> logger)
+        {
+            this._environment = environment;
+            this._logger = logger;
+        }
+
         public void OnException(ExceptionContext context)
         {
             var exception = context.Exception;
@@ -23,6 +34,20 @@ namespace Extensions.Http.Mvc.Filters
                         new ApiErrorEntry(validationError.PropertyName ?? "system", new [] { validationError.Message })
                     });
                 context.ExceptionHandled = true;
+            }
+            else
+            {
+                _logger.LogError(exception.ToString());
+
+                var defaultMessage = "Internal Error, Please contact support";
+
+                var message = !_environment.IsProduction() ? exception.ToString() : defaultMessage;
+
+                context.Result = new ApiResult(HttpStatusCode.InternalServerError,
+                    new[]
+                    {
+                        new ApiErrorEntry("system", new [] { message })
+                    });
             }
         }
     }

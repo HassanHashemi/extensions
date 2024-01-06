@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Extensions.Sliding
 {
-    public class SlidingParams
+    public class SlidingParams : IValidatableObject
     {
         public int Take { get; set; }
         public int Skip { get; set; }
@@ -22,6 +23,19 @@ namespace Extensions.Sliding
                     }
                 };
             }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var result = new List<ValidationResult>();
+
+            if (Take < 1)
+                result.Add(new ValidationResult("Invalid take", new[] { nameof(Take) }));
+
+            if (Skip < 0)
+                result.Add(new ValidationResult("Invalid skip", new[] { nameof(Skip) }));
+
+            return result;
         }
     }
 }

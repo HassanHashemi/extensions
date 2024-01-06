@@ -153,6 +153,13 @@ namespace Extensions
                 .TotalMilliseconds;
         }
 
+        public static double ToEpochSeconds(this DateTime date)
+        {
+            return date.ToUniversalTime()
+                .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
+                .TotalSeconds;
+        }
+
         public static DateTime ToDateTimeFromPersian(this string value)
         {
             if (string.IsNullOrEmpty(value))

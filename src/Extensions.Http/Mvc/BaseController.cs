@@ -9,9 +9,12 @@ namespace Extensions.Http.Mvc
     {
         protected IActionResult ApiOk(object data, PaginationInfo paginationInfo = null)
         {
-            if (data.GetType().IsPrimitive || data is string)
+            if (data != null)
             {
-                throw new ArgumentException("Primitive types are not supported");
+                if (data.GetType().IsPrimitive || data is string)
+                {
+                    throw new ArgumentException("Primitive types are not supported");
+                }
             }
 
             return new ApiResult(HttpStatusCode.OK, data, paginationInfo);

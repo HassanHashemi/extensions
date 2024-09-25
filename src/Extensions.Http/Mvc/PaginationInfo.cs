@@ -11,6 +11,7 @@
             Total = total;
         }
 
-        public int Total { get; }
+        // allow json serialization
+        public int Total { get; set; }
     }
 }

@@ -26,13 +26,12 @@ namespace Extensions.Http.Mvc.Filters
                 context.Result = new ApiResult(HttpStatusCode.NotFound, notFound.Message);
                 context.ExceptionHandled = true;
             }
-            else if (exception is DomainValidationException validationError)
+            else if (exception is DomainValidationException domainException)
             {
-                context.Result = new ApiResult(HttpStatusCode.BadRequest,
-                    new[]
-                    {
-                        new ApiErrorEntry(validationError.PropertyName ?? "system", new [] { validationError.Message })
-                    });
+                var errorCode = domainException.ErrorCode ?? 0;
+
+                var errors = new ApiErrorEntry("error", errorCode, new[] { exception.Message });
+                context.Result = new ApiResult(HttpStatusCode.BadRequest, errors);
                 context.ExceptionHandled = true;
             }
             else
@@ -46,7 +45,7 @@ namespace Extensions.Http.Mvc.Filters
                 context.Result = new ApiResult(HttpStatusCode.InternalServerError,
                     new[]
                     {
-                        new ApiErrorEntry("system", new [] { message })
+                        new ApiErrorEntry("system", 0, new [] { message })
                     });
             }
         }

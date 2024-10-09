@@ -19,7 +19,7 @@ namespace Extensions.Http.Mvc
 
         protected IActionResult BadRequestInternal(string error)
         {
-            var errorEntry = new ApiErrorEntry("message", new[] { error });
+            var errorEntry = new ApiErrorEntry("message", (int)HttpStatusCode.BadRequest, new[] { error });
             return BadRequestInternal(errorEntry);
         }
 

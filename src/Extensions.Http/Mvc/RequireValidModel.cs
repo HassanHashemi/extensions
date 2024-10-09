@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 
-namespace Portal.Web.Infra.Filters
+namespace Extensions.Http.Mvc
 {
     public class RequireValidModel : Attribute, IActionFilter
     {
@@ -19,7 +19,7 @@ namespace Portal.Web.Infra.Filters
             {
                 var data = context.ModelState
                     .Where(i => i.Value.ValidationState != ModelValidationState.Valid)
-                    .Select(ApiErrorEntry.Format)
+                    .Select(ApiErrorEntry.FormatBadRequest)
                     .ToArray();
 
                 context.Result = new ApiResult(HttpStatusCode.BadRequest, data);
